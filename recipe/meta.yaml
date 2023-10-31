@@ -1,6 +1,6 @@
 {% set name = "Einsums" %}
-{% set version = "0.2" %}
-{% set sha256 = "6f0e209add31b38d58a557e14afce7b23d5dd684a70aaf15554469f19ce77d29" %}
+{% set version = "0.3" %}
+{% set sha256 = "be4c6b80c20dfbe84a5039833dddd07b6cec1762e39e4bf7ff709c1097b2d387" %}
 {% set build_number = 0 %}
 
 package:
@@ -14,7 +14,7 @@ source:
 build:
   number: {{ build_number }}
   string: {{ blas_impl }}_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}
-  skip: true                                                               # [win]
+  skip: true  # [win]
   binary_relocation: true
   run_exports:
     - {{ pin_subpackage('einsums', max_pin='x.x') }}
