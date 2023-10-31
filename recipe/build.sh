@@ -18,6 +18,15 @@ elif [[ "$blas_impl" == "openblas" ]]; then
     ARCH_ARGS="-DBLA_VENDOR=OpenBLAS -DBLA_SIZEOF_INTEGER=4 ${ARCH_ARGS}"
 fi
 
+# Einsums target platform specific options
+plat_args=()
+if [[ "${target_platform}" == "osx-arm64" ]]; then
+    plat_args+=( '-D EINSUMS_ENABLE_TESTING=OFF' )
+else
+    plat_args+=( '-D EINSUMS_ENABLE_TESTING=ON' )
+fi
+
+
 ${BUILD_PREFIX}/bin/cmake ${CMAKE_ARGS} ${ARCH_ARGS} \
   -S ${SRC_DIR} \
   -B build \
@@ -30,7 +39,7 @@ ${BUILD_PREFIX}/bin/cmake ${CMAKE_ARGS} ${ARCH_ARGS} \
   -D CMAKE_CXX_FLAGS="${CXXFLAGS}" \
   -D CMAKE_INSTALL_LIBDIR=lib \
   -D EINSUMS_STATIC_BUILD=OFF \
-  -D EINSUMS_ENABLE_TESTING=ON \
+  "${plat_args[@]}" \
   -D EINSUMS_USE_HPTT=ON \
   -D FETCHCONTENT_QUIET=OFF \
   -D CMAKE_REQUIRE_FIND_PACKAGE_Catch2=ON \
