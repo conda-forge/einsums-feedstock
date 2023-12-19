@@ -17,13 +17,13 @@ cxx_compiler_version:
 fftw:
 - '3'
 hdf5:
-- 1.14.2
+- 1.14.3
 llvm_openmp:
 - '16'
 macos_machine:
 - x86_64-apple-darwin13.4.0
 mkl:
-- '2022'
+- '2023'
 mkl_devel:
 - '2022'
 target_platform:
