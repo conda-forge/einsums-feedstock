@@ -83,8 +83,8 @@ about:
   license: MIT AND BSD-3-Clause
   license_url: https://opensource.org/license/mit/
   license_file:
-    - LICENSE
-    - THIRD-PARTY-LICENSES
+    - LICENSE.txt
+    - THIRD-PARTY-LICENSES.txt
   license_family: MIT
   summary: "J. Turney's C++ library providing compile-time contraction pattern analysis to determine optimal tensor operations"
 
