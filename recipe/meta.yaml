@@ -1,7 +1,7 @@
 {% set name = "Einsums" %}
-{% set version = "0.3" %}
-{% set sha256 = "be4c6b80c20dfbe84a5039833dddd07b6cec1762e39e4bf7ff709c1097b2d387" %}
-{% set build_number = 2 %}
+{% set version = "0.4" %}
+{% set sha256 = "3d8da3cc049686e7759fdf3c4a894444e5ea478a8053295b9cea37a2d0fe956f" %}
+{% set build_number = 0 %}
 
 package:
   name: {{ name|lower }}
@@ -14,12 +14,11 @@ source:
 build:
   number: {{ build_number }}
   string: {{ blas_impl }}_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}
-  skip: true                                                               # [win]
+  skip: true  # [win]
   binary_relocation: true
   run_exports:
     - {{ pin_subpackage('einsums', max_pin='x.x') }}
   ignore_run_exports:
-    - elfutils                                                             # [linux]
     - libzlib
 
 requirements:
@@ -32,8 +31,7 @@ requirements:
     - libgomp                                                              # [linux]
   host:
     - catch2
-    - elfutils                                                             # [linux]
-    - fmt 10.1
+    - fmt 10.2
     - hdf5
     - range-v3 0.12
     - zlib
@@ -83,8 +81,8 @@ about:
   license: MIT AND BSD-3-Clause
   license_url: https://opensource.org/license/mit/
   license_file:
-    - LICENSE
-    - THIRD-PARTY-LICENSES
+    - LICENSE.txt
+    - THIRD-PARTY-LICENSES.txt
   license_family: MIT
   summary: "J. Turney's C++ library providing compile-time contraction pattern analysis to determine optimal tensor operations"
 
@@ -96,8 +94,8 @@ extra:
 
 ## NOTES
 # * BLAS/LAPACK
-#   * Einsums actually requires the whole quartet: blas, cblas, lapack, lapacke.
-#     But since both MKL and OpenBLAS distribute all four together, only blas is listed.
+#   * Einsums requires: blas and lapack.
+#     But since both MKL and OpenBLAS distribute all both, only blas is listed.
 #   * Einsums _does_ compile different code for MKL vs. other distributions, hence the
 #     `blas_impl` in cbc.yaml. MKL and OpenBLAS are known to work. netlib would
 #     probably work. Accelerate definitely _doesn't_ work. And blis hasn't been tested.
