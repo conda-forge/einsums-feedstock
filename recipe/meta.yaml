@@ -19,7 +19,6 @@ build:
   run_exports:
     - {{ pin_subpackage('einsums', max_pin='x.x') }}
   ignore_run_exports:
-    - elfutils                                                             # [linux]
     - libzlib
 
 requirements:
@@ -32,8 +31,7 @@ requirements:
     - libgomp                                                              # [linux]
   host:
     - catch2
-    - elfutils                                                             # [linux]
-    - fmt 10.1
+    - fmt 10.2
     - hdf5
     - range-v3 0.12
     - zlib
@@ -96,8 +94,8 @@ extra:
 
 ## NOTES
 # * BLAS/LAPACK
-#   * Einsums actually requires the whole quartet: blas, cblas, lapack, lapacke.
-#     But since both MKL and OpenBLAS distribute all four together, only blas is listed.
+#   * Einsums requires: blas and lapack.
+#     But since both MKL and OpenBLAS distribute all both, only blas is listed.
 #   * Einsums _does_ compile different code for MKL vs. other distributions, hence the
 #     `blas_impl` in cbc.yaml. MKL and OpenBLAS are known to work. netlib would
 #     probably work. Accelerate definitely _doesn't_ work. And blis hasn't been tested.
