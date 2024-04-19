@@ -45,7 +45,6 @@ ${BUILD_PREFIX}/bin/cmake ${CMAKE_ARGS} ${ARCH_ARGS} \
   -D CMAKE_REQUIRE_FIND_PACKAGE_Catch2=ON \
   -D CMAKE_REQUIRE_FIND_PACKAGE_fmt=ON \
   -D CMAKE_REQUIRE_FIND_PACKAGE_range-v3=ON \
-  -D CMAKE_REQUIRE_FIND_PACKAGE_netlib=ON \
   -D CMAKE_PREFIX_PATH="${PREFIX}"
 
 cmake --build build --target install
