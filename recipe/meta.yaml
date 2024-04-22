@@ -72,7 +72,7 @@ test:
     # Inspect linkage
     - ldd -v $PREFIX/lib/libeinsums$SHLIB_EXT                               # [linux]
     - otool -L $PREFIX/lib/libeinsums$SHLIB_EXT                             # [osx]
-    - objdump.exe -p %PREFIX%\\Library\\lib\\einsums.lib | findstr /i "dll" # [win]
+    - objdump.exe -p %PREFIX%\\Library\\lib\\einsums.lib | findstr /i "dll"  # [win]
     # Actually test
     # - cd timing
     # - cmake -S. -Bbuild -GNinja -DCMAKE_PREFIX_PATH="${PREFIX}" --log-level verbose  # [unix]
