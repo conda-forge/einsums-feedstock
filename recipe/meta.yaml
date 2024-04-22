@@ -64,23 +64,25 @@ test:
     # Verify library
     - test -f $PREFIX/lib/libeinsums$SHLIB_EXT                             # [unix]
     - test ! -f $PREFIX/lib/libeinsums.a                                   # [unix]
+    - if not exist %PREFIX%\\Library\\lib\\einsums.lib exit 1              # [win]
+    - if exist %PREFIX%\\Library\\bin\einsums.dll exit 1                   # [win]
     # Verify accessories
     - test -f $PREFIX/include/einsums/Tensor.hpp                           # [unix]
     - test -f $PREFIX/include/einsums/h5cpp/H5Pall.hpp                     # [unix]
     - test -f $PREFIX/share/cmake/Einsums/EinsumsConfig.cmake              # [unix]
     - test -f $PREFIX/share/cmake/Einsums/EinsumsTargets-CXX.cmake         # [unix]
-    # - if not exist %PREFIX%\\Library\\include\\einsums\\Tensor.hpp exit 1  # [win]
-    # - if not exist %PREFIX%\\Library\\share\\cmake\\Einsums\\EinsumsConfig.cmake exit 1  # [win]
-    # - if not exist %PREFIX%\\Library\\share\\cmake\\Einsums\\EinsumsTargets-CXX.cmake exit 1  # [win]
+    - if not exist %PREFIX%\\Library\\include\\einsums\\Tensor.hpp exit 1  # [win]
+    - if not exist %PREFIX%\\share\\cmake\\Einsums\\EinsumsConfig.cmake exit 1  # [win]
+    - if not exist %PREFIX%\\share\\cmake\\Einsums\\EinsumsTargets-CXX.cmake exit 1  # [win]
     # Inspect linkage
     - ldd -v $PREFIX/lib/libeinsums$SHLIB_EXT                               # [linux]
     - otool -L $PREFIX/lib/libeinsums$SHLIB_EXT                             # [osx]
     - objdump.exe -p %PREFIX%\\Library\\lib\\einsums.lib | findstr /i "dll"  # [win]
     # Actually test
-    # - cd timing
-    # - cmake -S. -Bbuild -GNinja -DCMAKE_PREFIX_PATH="${PREFIX}" --log-level verbose  # [unix]
-    # - cmake --build build
-    # - ./build/timings                                                      # [unix]
+    - cd timing
+    - cmake -S. -Bbuild -GNinja -DCMAKE_PREFIX_PATH="${PREFIX}" --log-level verbose  # [unix]
+    - cmake --build build
+    - ./build/timings                                                      # [unix]
 
 about:
   home: https://github.com/Einsums/Einsums
