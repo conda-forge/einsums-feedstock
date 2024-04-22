@@ -80,7 +80,7 @@ test:
     - objdump.exe -p %PREFIX%\\Library\\lib\\einsums.lib | findstr /i "dll"  # [win]
     # Actually test
     - cd timing                                                              # [unix]
-    - cd %PREFIX\\timing                                                     # [win]
+    - cd "%PREFIX%\\timing"                                                  # [win]
     - cmake -S. -Bbuild -GNinja -DCMAKE_PREFIX_PATH="${PREFIX}" --log-level verbose  # [unix]
     - cmake -S. -Bbuild -GNinja -DCMAKE_PREFIX_PATH="%PREFIX%" --log-level verbose   # [win]
     - cmake --build build
