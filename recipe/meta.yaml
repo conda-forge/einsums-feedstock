@@ -35,17 +35,20 @@ requirements:
     - hdf5
     - range-v3 0.12
     - zlib
+    - intel-openmp                                                         # [win]
     - llvm-openmp                                                          # [blas_impl == "mkl" and linux]
     - mkl-devel {{ mkl }}                                                  # [blas_impl == "mkl"]
     - blas-devel * *_{{ blas_impl }}                                       # [blas_impl == "openblas"]
     - fftw                                                                 # [blas_impl == "openblas"]
     - openblas * openmp_*                                                  # [blas_impl == "openblas"]
   run:
+    - intel-openmp                                                         # [win]
     - llvm-openmp                                                          # [blas_impl == "mkl" and linux]
     - libopenblas * openmp_*                                               # [blas_impl == "openblas"]
 
 test:
   requires:
+    - m2w64-binutils                                                       # [win]    # provides objdump.exe
     - {{ compiler('cxx') }}
     - cmake
     - ninja
