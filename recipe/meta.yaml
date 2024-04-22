@@ -14,7 +14,7 @@ source:
 build:
   number: {{ build_number }}
   string: {{ blas_impl }}_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}
-  skip: true  # [win]
+  #skip: true  # [win]
   binary_relocation: true
   run_exports:
     - {{ pin_subpackage('einsums', max_pin='x.x') }}
