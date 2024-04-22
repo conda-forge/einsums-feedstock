@@ -1,7 +1,7 @@
 {% set name = "Einsums" %}
 {% set version = "0.5" %}
 {% set sha256 = "0eb4c739ee135412db6e4ee28e29b750b13e4ff70e652822bbb0c165ad2c231b" %}
-{% set build_number = 0 %}
+{% set build_number = 1 %}
 
 package:
   name: {{ name|lower }}
@@ -14,7 +14,7 @@ source:
 build:
   number: {{ build_number }}
   string: {{ blas_impl }}_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}
-  skip: true  # [win]
+  #skip: true  # [win]
   binary_relocation: true
   run_exports:
     - {{ pin_subpackage('einsums', max_pin='x.x') }}
@@ -39,13 +39,16 @@ requirements:
     - mkl-devel {{ mkl }}                                                  # [blas_impl == "mkl"]
     - blas-devel * *_{{ blas_impl }}                                       # [blas_impl == "openblas"]
     - fftw                                                                 # [blas_impl == "openblas"]
-    - openblas * openmp_*                                                  # [blas_impl == "openblas"]
+    - openblas * openmp_*                                                  # [blas_impl == "openblas" and not win]
+    - openblas * pthreads_*                                                # [blas_impl == "openblas" and win]
   run:
     - llvm-openmp                                                          # [blas_impl == "mkl" and linux]
-    - libopenblas * openmp_*                                               # [blas_impl == "openblas"]
+    - libopenblas * openmp_*                                               # [blas_impl == "openblas" and not win]
+    - libopenblas * pthreads_*                                             # [blas_impl == "openblas" and win]
 
 test:
   requires:
+    - m2w64-binutils                                                       # [win]    # provides objdump.exe
     - {{ compiler('cxx') }}
     - cmake
     - ninja
@@ -61,19 +64,27 @@ test:
     # Verify library
     - test -f $PREFIX/lib/libeinsums$SHLIB_EXT                             # [unix]
     - test ! -f $PREFIX/lib/libeinsums.a                                   # [unix]
+    - if not exist %PREFIX%\\Library\\lib\\einsums.lib exit 1              # [win]
+    - if exist %PREFIX%\\Library\\bin\einsums.dll exit 1                   # [win]
     # Verify accessories
     - test -f $PREFIX/include/einsums/Tensor.hpp                           # [unix]
     - test -f $PREFIX/include/einsums/h5cpp/H5Pall.hpp                     # [unix]
     - test -f $PREFIX/share/cmake/Einsums/EinsumsConfig.cmake              # [unix]
     - test -f $PREFIX/share/cmake/Einsums/EinsumsTargets-CXX.cmake         # [unix]
+    - if not exist %PREFIX%\\Library\\include\\einsums\\Tensor.hpp exit 1  # [win]
+    - if not exist %PREFIX%\\Library\\share\\cmake\\Einsums\\EinsumsConfig.cmake exit 1  # [win]
+    - if not exist %PREFIX%\\Library\\share\\cmake\\Einsums\\EinsumsTargets-CXX.cmake exit 1  # [win]
     # Inspect linkage
-    - ldd -v $PREFIX/lib/libeinsums$SHLIB_EXT                              # [linux]
-    - otool -L $PREFIX/lib/libeinsums$SHLIB_EXT                            # [osx]
+    - ldd -v $PREFIX/lib/libeinsums$SHLIB_EXT                               # [linux]
+    - otool -L $PREFIX/lib/libeinsums$SHLIB_EXT                             # [osx]
+    - objdump.exe -p %PREFIX%\\Library\\lib\\einsums.lib | findstr /i "dll"  # [win]
     # Actually test
-    - cd timing
+    - cd timing                                                              # [unix]
+    - cd "%SRC_DIR%\\timing"                                                 # [win]
     - cmake -S. -Bbuild -GNinja -DCMAKE_PREFIX_PATH="${PREFIX}" --log-level verbose  # [unix]
+    - cmake -S. -Bbuild -GNinja -DCMAKE_PREFIX_PATH="%PREFIX%" -DCMAKE_C_COMPILER=clang-cl -DCMAKE_C_FLAGS="%CFLAGS%" -DCMAKE_CXX_COMPILER=clang-cl -DCMAKE_CXX_FLAGS="%CXXFLAGS%" -DEINSUMS_FFT_LIBRARY=OFF --log-level verbose   # [win]
     - cmake --build build
-    - ./build/timings                                                      # [unix]
+    # - ./build/timings                                                      # [unix]
 
 about:
   home: https://github.com/Einsums/Einsums

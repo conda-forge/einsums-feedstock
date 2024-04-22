@@ -63,6 +63,20 @@ Current build status
                   <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/einsums-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_arm64_" alt="variant">
                 </a>
               </td>
+            </tr><tr>
+              <td>win_64_blas_implmkl</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=20636&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/einsums-feedstock?branchName=main&jobName=win&configuration=win%20win_64_blas_implmkl" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>win_64_blas_implopenblas</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=20636&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/einsums-feedstock?branchName=main&jobName=win&configuration=win%20win_64_blas_implopenblas" alt="variant">
+                </a>
+              </td>
             </tr>
           </tbody>
         </table>
