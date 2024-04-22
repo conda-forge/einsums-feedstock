@@ -40,11 +40,13 @@ requirements:
     - mkl-devel {{ mkl }}                                                  # [blas_impl == "mkl"]
     - blas-devel * *_{{ blas_impl }}                                       # [blas_impl == "openblas"]
     - fftw                                                                 # [blas_impl == "openblas"]
-    - openblas * openmp_*                                                  # [blas_impl == "openblas"]
+    - openblas * openmp_*                                                  # [blas_impl == "openblas" and not win]
+    - openblas * pthreads_*                                                # [blas_impl == "openblas" and win]
   run:
     - intel-openmp                                                         # [win]
     - llvm-openmp                                                          # [blas_impl == "mkl" and linux]
-    - libopenblas * openmp_*                                               # [blas_impl == "openblas"]
+    - libopenblas * openmp_*                                               # [blas_impl == "openblas" and not win]
+    - libopenblas * pthreads_*                                             # [blas_impl == "openblas" and win]
 
 test:
   requires:
