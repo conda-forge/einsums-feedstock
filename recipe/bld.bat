@@ -12,7 +12,7 @@ cmake %CMAKE_ARGS% ^
   -D CMAKE_INSTALL_INCLUDEDIR="Library\\include" ^
   -D CMAKE_INSTALL_BINDIR="Scripts" ^
   -D CMAKE_INSTALL_DATADIR="Library\\share" ^
-  -D CMAKE_INSTALL_CMAKEDIR="Library\\share\\cmake\Einsums" ^
+  -D EINSUMS_INSTALL_CMAKEDIR="Library\\share\\cmake\Einsums" ^
   -D EINSUMS_STATIC_BUILD=ON ^
   -D EINSUMS_USE_HPTT=OFF ^
   -D FETCHCONTENT_QUIET=OFF ^
