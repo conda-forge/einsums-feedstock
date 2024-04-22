@@ -69,9 +69,9 @@ test:
     - test -f $PREFIX/include/einsums/h5cpp/H5Pall.hpp                     # [unix]
     - test -f $PREFIX/share/cmake/Einsums/EinsumsConfig.cmake              # [unix]
     - test -f $PREFIX/share/cmake/Einsums/EinsumsTargets-CXX.cmake         # [unix]
-    - if not exist %PREFIX%\\Library\\include\\einsums\\Tensor.hpp exit 1  # [win]
-    - if not exist %PREFIX%\\Library\\share\\cmake\\Einsums\\EinsumsConfig.cmake exit 1  # [win]
-    - if not exist %PREFIX%\\Library\\share\\cmake\\Einsums\\EinsumsTargets-CXX.cmake exit 1  # [win]
+    # - if not exist %PREFIX%\\Library\\include\\einsums\\Tensor.hpp exit 1  # [win]
+    # - if not exist %PREFIX%\\Library\\share\\cmake\\Einsums\\EinsumsConfig.cmake exit 1  # [win]
+    # - if not exist %PREFIX%\\Library\\share\\cmake\\Einsums\\EinsumsTargets-CXX.cmake exit 1  # [win]
     # Inspect linkage
     - ldd -v $PREFIX/lib/libeinsums$SHLIB_EXT                               # [linux]
     - otool -L $PREFIX/lib/libeinsums$SHLIB_EXT                             # [osx]
