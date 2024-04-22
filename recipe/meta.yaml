@@ -82,7 +82,7 @@ test:
     - cd timing                                                              # [unix]
     - cd "%SRC_DIR%\\timing"                                                 # [win]
     - cmake -S. -Bbuild -GNinja -DCMAKE_PREFIX_PATH="${PREFIX}" --log-level verbose  # [unix]
-    - cmake -S. -Bbuild -GNinja -DCMAKE_PREFIX_PATH="%PREFIX%" -DCMAKE_C_COMPILER=clang-cl -DCMAKE_C_FLAGS="%CFLAGS%" -DCMAKE_CXX_COMPILER=clang-cl -DCMAKE_CXX_FLAGS="%CXXFLAGS%" --log-level verbose   # [win]
+    - cmake -S. -Bbuild -GNinja -DCMAKE_PREFIX_PATH="%PREFIX%" -DCMAKE_C_COMPILER=clang-cl -DCMAKE_C_FLAGS="%CFLAGS%" -DCMAKE_CXX_COMPILER=clang-cl -DCMAKE_CXX_FLAGS="%CXXFLAGS%" -DEINSUMS_FFT_LIBRARY=OFF --log-level verbose   # [win]
     - cmake --build build
     # - ./build/timings                                                      # [unix]
 
