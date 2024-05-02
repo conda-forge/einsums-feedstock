@@ -1,7 +1,7 @@
 {% set name = "Einsums" %}
 {% set version = "0.5" %}
 {% set sha256 = "0eb4c739ee135412db6e4ee28e29b750b13e4ff70e652822bbb0c165ad2c231b" %}
-{% set build_number = 0 %}
+{% set build_number = 1 %}
 
 package:
   name: {{ name|lower }}
@@ -43,6 +43,7 @@ requirements:
   run:
     - llvm-openmp                                                          # [blas_impl == "mkl" and linux]
     - libopenblas * openmp_*                                               # [blas_impl == "openblas"]
+    - range-v3 0.12
 
 test:
   requires:
