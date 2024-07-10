@@ -1,7 +1,7 @@
 {% set name = "Einsums" %}
 {% set version = "0.5" %}
 {% set sha256 = "0eb4c739ee135412db6e4ee28e29b750b13e4ff70e652822bbb0c165ad2c231b" %}
-{% set build_number = 1 %}
+{% set build_number = 2 %}
 
 package:
   name: {{ name|lower }}
@@ -24,6 +24,7 @@ build:
 requirements:
   build:
     - {{ compiler('c') }}
+    - {{ stdlib("c") }}
     - {{ compiler('cxx') }}
     - cmake
     - ninja
