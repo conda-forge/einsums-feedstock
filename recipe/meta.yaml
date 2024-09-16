@@ -1,7 +1,7 @@
 {% set name = "Einsums" %}
-{% set version = "0.5" %}
-{% set sha256 = "0eb4c739ee135412db6e4ee28e29b750b13e4ff70e652822bbb0c165ad2c231b" %}
-{% set build_number = 2 %}
+{% set version = "0.6" %}
+{% set sha256 = "21f9a3b50a01e38b2ccf9e0830daac03a4dea0f5ea9005d64e01bc22ec311e74" %}
+{% set build_number = 0 %}
 
 package:
   name: {{ name|lower }}
