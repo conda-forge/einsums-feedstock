@@ -23,7 +23,7 @@ docker_image:
 fftw:
 - '3'
 hdf5:
-- 1.14.3
+- 1.14.4
 mkl:
 - '2023'
 mkl_devel:
