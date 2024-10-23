@@ -25,9 +25,9 @@ fftw:
 hdf5:
 - 1.14.4
 mkl:
-- '2023'
+- '2024'
 mkl_devel:
-- '2023'
+- '2024'
 target_platform:
 - linux-64
 zip_keys:
