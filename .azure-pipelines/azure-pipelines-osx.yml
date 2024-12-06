@@ -8,14 +8,23 @@ jobs:
     vmImage: macOS-13
   strategy:
     matrix:
-      osx_64_blas_implmkl:
-        CONFIG: osx_64_blas_implmkl
+      osx_64_blas_implmklhdf51.14.3:
+        CONFIG: osx_64_blas_implmklhdf51.14.3
         UPLOAD_PACKAGES: 'True'
-      osx_64_blas_implopenblas:
-        CONFIG: osx_64_blas_implopenblas
+      osx_64_blas_implmklhdf51.14.4:
+        CONFIG: osx_64_blas_implmklhdf51.14.4
         UPLOAD_PACKAGES: 'True'
-      osx_arm64_:
-        CONFIG: osx_arm64_
+      osx_64_blas_implopenblashdf51.14.3:
+        CONFIG: osx_64_blas_implopenblashdf51.14.3
+        UPLOAD_PACKAGES: 'True'
+      osx_64_blas_implopenblashdf51.14.4:
+        CONFIG: osx_64_blas_implopenblashdf51.14.4
+        UPLOAD_PACKAGES: 'True'
+      osx_arm64_hdf51.14.3:
+        CONFIG: osx_arm64_hdf51.14.3
+        UPLOAD_PACKAGES: 'True'
+      osx_arm64_hdf51.14.4:
+        CONFIG: osx_arm64_hdf51.14.4
         UPLOAD_PACKAGES: 'True'
   timeoutInMinutes: 360
   variables: {}

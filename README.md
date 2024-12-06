@@ -29,38 +29,73 @@ Current build status
         <table>
           <thead><tr><th>Variant</th><th>Status</th></tr></thead>
           <tbody><tr>
-              <td>linux_64_blas_implmkl</td>
+              <td>linux_64_blas_implmklhdf51.14.3</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=20636&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/einsums-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_64_blas_implmkl" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/einsums-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_64_blas_implmklhdf51.14.3" alt="variant">
                 </a>
               </td>
             </tr><tr>
-              <td>linux_64_blas_implopenblas</td>
+              <td>linux_64_blas_implmklhdf51.14.4</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=20636&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/einsums-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_64_blas_implopenblas" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/einsums-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_64_blas_implmklhdf51.14.4" alt="variant">
                 </a>
               </td>
             </tr><tr>
-              <td>osx_64_blas_implmkl</td>
+              <td>linux_64_blas_implopenblashdf51.14.3</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=20636&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/einsums-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_64_blas_implmkl" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/einsums-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_64_blas_implopenblashdf51.14.3" alt="variant">
                 </a>
               </td>
             </tr><tr>
-              <td>osx_64_blas_implopenblas</td>
+              <td>linux_64_blas_implopenblashdf51.14.4</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=20636&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/einsums-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_64_blas_implopenblas" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/einsums-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_64_blas_implopenblashdf51.14.4" alt="variant">
                 </a>
               </td>
             </tr><tr>
-              <td>osx_arm64</td>
+              <td>osx_64_blas_implmklhdf51.14.3</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=20636&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/einsums-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_arm64_" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/einsums-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_64_blas_implmklhdf51.14.3" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>osx_64_blas_implmklhdf51.14.4</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=20636&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/einsums-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_64_blas_implmklhdf51.14.4" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>osx_64_blas_implopenblashdf51.14.3</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=20636&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/einsums-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_64_blas_implopenblashdf51.14.3" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>osx_64_blas_implopenblashdf51.14.4</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=20636&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/einsums-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_64_blas_implopenblashdf51.14.4" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>osx_arm64_hdf51.14.3</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=20636&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/einsums-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_arm64_hdf51.14.3" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>osx_arm64_hdf51.14.4</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=20636&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/einsums-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_arm64_hdf51.14.4" alt="variant">
                 </a>
               </td>
             </tr>

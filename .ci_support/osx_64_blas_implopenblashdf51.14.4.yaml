@@ -7,7 +7,7 @@ blas_impl:
 c_compiler:
 - clang
 c_compiler_version:
-- '17'
+- '18'
 c_stdlib:
 - macosx_deployment_target
 c_stdlib_version:
@@ -19,13 +19,13 @@ channel_targets:
 cxx_compiler:
 - clangxx
 cxx_compiler_version:
-- '17'
+- '18'
 fftw:
 - '3'
 hdf5:
 - 1.14.4
 llvm_openmp:
-- '17'
+- '18'
 macos_machine:
 - x86_64-apple-darwin13.4.0
 mkl:
