@@ -36,6 +36,8 @@ requirements:
     - catch2
     - fmt 11
     - spdlog
+    - hdf5
+    - zlib
     - cpptrace                                                             # [linux]
     - cpp-argparse
     - numpy
