@@ -53,6 +53,7 @@ requirements:
     - numpy
     - hdf5
     - zlib
+    - libzlib
     - llvm-openmp                                                          # [blas_impl == "mkl" and linux]
     - libopenblas * openmp_*                                               # [blas_impl == "openblas"]
 
