@@ -32,12 +32,9 @@ requirements:
     - llvm-openmp                                                          # [osx]
     - libgomp                                                              # [linux]
   host:
-    - python                                 # [build_platform != target_platform]
-    - cross-python_{{ target_platform }}     # [build_platform != target_platform]
+    - python
     - catch2
     - fmt 11
-    - hdf5
-    - zlib
     - spdlog
     - cpptrace                                                             # [linux]
     - cpp-argparse
@@ -52,6 +49,8 @@ requirements:
   run:
     - python
     - numpy
+    - hdf5
+    - zlib
     - llvm-openmp                                                          # [blas_impl == "mkl" and linux]
     - libopenblas * openmp_*                                               # [blas_impl == "openblas"]
 
