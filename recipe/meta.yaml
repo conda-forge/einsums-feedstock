@@ -20,6 +20,7 @@ build:
     - {{ pin_subpackage('einsums', max_pin='x.x') }}
   ignore_run_exports:
     - libzlib
+    - zlib
 
 requirements:
   build:
@@ -27,7 +28,7 @@ requirements:
     - {{ compiler('c') }}
     - {{ stdlib("c") }}
     - {{ compiler('cxx') }}
-    - cmake
+    - cmake 3.29.*
     - ninja
     - llvm-openmp                                                          # [osx]
     - libgomp                                                              # [linux]
@@ -53,7 +54,6 @@ requirements:
     - numpy
     - hdf5
     - zlib
-    - libzlib
     - llvm-openmp                                                          # [blas_impl == "mkl" and linux]
     - libopenblas * openmp_*                                               # [blas_impl == "openblas"]
 
