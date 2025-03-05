@@ -50,6 +50,8 @@ requirements:
     - fftw                                                                 # [blas_impl == "openblas"]
     - openblas * openmp_*                                                  # [blas_impl == "openblas"]
   run:
+    - python
+    - numpy
     - llvm-openmp                                                          # [blas_impl == "mkl" and linux]
     - libopenblas * openmp_*                                               # [blas_impl == "openblas"]
 
