@@ -34,8 +34,12 @@ requirements:
     - catch2
     - fmt 11
     - hdf5
-    - range-v3 0.12
     - zlib
+    - cpptrace                                                             # [linux]
+    - cpp-argparse
+    - numpy
+    - pybind11
+    - pytest
     - llvm-openmp                                                          # [blas_impl == "mkl" and linux]
     - mkl-devel {{ mkl }}                                                  # [blas_impl == "mkl"]
     - blas-devel * *_{{ blas_impl }}                                       # [blas_impl == "openblas"]
@@ -44,14 +48,12 @@ requirements:
   run:
     - llvm-openmp                                                          # [blas_impl == "mkl" and linux]
     - libopenblas * openmp_*                                               # [blas_impl == "openblas"]
-    - range-v3 0.12
 
 test:
   requires:
     - {{ compiler('cxx') }}
     - cmake
     - ninja
-    - range-v3 0.12
     - zlib
     - mkl-devel                                                            # [blas_impl == "mkl"]
     - blas-devel * *_openblas                                              # [blas_impl == "openblas"]
@@ -61,21 +63,21 @@ test:
     - timing/main.cpp
   commands:
     # Verify library
-    - test -f $PREFIX/lib/libeinsums$SHLIB_EXT                             # [unix]
-    - test ! -f $PREFIX/lib/libeinsums.a                                   # [unix]
+    - test -f $PREFIX/lib/libEinsums$SHLIB_EXT                             # [unix]
+    - test ! -f $PREFIX/lib/libEinsums.a                                   # [unix]
     # Verify accessories
-    - test -f $PREFIX/include/einsums/Tensor.hpp                           # [unix]
-    - test -f $PREFIX/include/einsums/h5cpp/H5Pall.hpp                     # [unix]
+    - test -f $PREFIX/include/Einsums/Tensor.hpp                           # [unix]
+    - test -f $PREFIX/include/Einsums/h5cpp/H5Pall.hpp                     # [unix]
     - test -f $PREFIX/share/cmake/Einsums/EinsumsConfig.cmake              # [unix]
-    - test -f $PREFIX/share/cmake/Einsums/EinsumsTargets-CXX.cmake         # [unix]
+    - test -f $PREFIX/share/cmake/Einsums/EinsumsTargets.cmake             # [unix]
     # Inspect linkage
-    - ldd -v $PREFIX/lib/libeinsums$SHLIB_EXT                              # [linux]
-    - otool -L $PREFIX/lib/libeinsums$SHLIB_EXT                            # [osx]
+    - ldd -v $PREFIX/lib/libEinsums$SHLIB_EXT                              # [linux]
+    - otool -L $PREFIX/lib/libEinsums$SHLIB_EXT                            # [osx]
     # Actually test
-    - cd timing
+    - cd testing/consume
     - cmake -S. -Bbuild -GNinja -DCMAKE_PREFIX_PATH="${PREFIX}" --log-level verbose  # [unix]
     - cmake --build build
-    - ./build/timings                                                      # [unix]
+    - ./build/HelloWorld                                                   # [unix]
 
 about:
   home: https://github.com/Einsums/Einsums
