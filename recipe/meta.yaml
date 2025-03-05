@@ -39,6 +39,7 @@ requirements:
     - fmt 11
     - hdf5
     - zlib
+    - spdlog
     - cpptrace                                                             # [linux]
     - cpp-argparse
     - numpy
