@@ -42,6 +42,7 @@ outputs:
         - fmt
         - cpp-argparse
         - spdlog
+        - zlib
 
     test:
       commands:
