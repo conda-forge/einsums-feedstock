@@ -32,7 +32,6 @@ outputs:
         - ninja
         - llvm-openmp                            # [osx]
         - libgomp                                # [linux]
-        - cpptrace
         - catch2                                 # For 1.0.1 this can be removed.
       host:
         - hdf5
@@ -43,6 +42,7 @@ outputs:
         - cpp-argparse
         - spdlog
         - zlib
+        - cpptrace
 
     test:
       commands:
