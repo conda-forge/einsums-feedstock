@@ -4,7 +4,7 @@
 {% set build_number = 0 %}
 
 package:
-  name: {{ name|lower }}
+  name: {{ name|lower }}-split
   version: {{ version }}
 
 source:
@@ -13,79 +13,47 @@ source:
 
 build:
   number: {{ build_number }}
-  string: {{ blas_impl }}_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}
-  skip: true  # [win]
   binary_relocation: true
-  run_exports:
-    - {{ pin_subpackage('einsums', max_pin='x.x') }}
-  ignore_run_exports:
-    - libzlib
-    - zlib
 
-requirements:
-  build:
-    - pybind11                               # [build_platform != target_platform]
-    - {{ compiler('c') }}
-    - {{ stdlib("c") }}
-    - {{ compiler('cxx') }}
-    - cmake 3.29.*
-    - ninja
-    - llvm-openmp                                                          # [osx]
-    - libgomp                                                              # [linux]
-  host:
-    - python
-    - catch2
-    - fmt 11
-    - spdlog
-    - hdf5
-    - zlib
-    - cpptrace                                                             # [linux]
-    - cpp-argparse
-    - numpy
-    - pybind11
-    - pytest
-    - llvm-openmp                                                          # [blas_impl == "mkl" and linux]
-    - mkl-devel {{ mkl }}                                                  # [blas_impl == "mkl"]
-    - blas-devel * *_{{ blas_impl }}                                       # [blas_impl == "openblas"]
-    - fftw                                                                 # [blas_impl == "openblas"]
-    - openblas * openmp_*                                                  # [blas_impl == "openblas"]
-  run:
-    - python
-    - numpy
-    - hdf5
-    - zlib
-    - llvm-openmp                                                          # [blas_impl == "mkl" and linux]
-    - libopenblas * openmp_*                                               # [blas_impl == "openblas"]
+outputs:
+  - name: einsums
+    script: build-cxx.sh
+    build:
+      skip: true  # [win]
+      run_exports:
+        - {{ pin_subpackage('einsums', max_pin='x.x') }}
 
-test:
-  requires:
-    - {{ compiler('cxx') }}
-    - cmake
-    - ninja
-    - zlib
-    - mkl-devel                                                            # [blas_impl == "mkl"]
-    - blas-devel * *_openblas                                              # [blas_impl == "openblas"]
-  files:
-    - timing/CMakeLists.txt
-  source_files:
-    - timing/main.cpp
-  commands:
-    # Verify library
-    - test -f $PREFIX/lib/libEinsums$SHLIB_EXT                             # [unix]
-    - test ! -f $PREFIX/lib/libEinsums.a                                   # [unix]
-    # Verify accessories
-    - test -f $PREFIX/include/Einsums/Tensor.hpp                           # [unix]
-    - test -f $PREFIX/include/Einsums/h5cpp/H5Pall.hpp                     # [unix]
-    - test -f $PREFIX/share/cmake/Einsums/EinsumsConfig.cmake              # [unix]
-    - test -f $PREFIX/share/cmake/Einsums/EinsumsTargets.cmake             # [unix]
-    # Inspect linkage
-    - ldd -v $PREFIX/lib/libEinsums$SHLIB_EXT                              # [linux]
-    - otool -L $PREFIX/lib/libEinsums$SHLIB_EXT                            # [osx]
-    # Actually test
-    - cd testing/consume
-    - cmake -S. -Bbuild -GNinja -DCMAKE_PREFIX_PATH="${PREFIX}" --log-level verbose  # [unix]
-    - cmake --build build
-    - ./build/HelloWorld                                                   # [unix]
+    requirements:
+      build:
+        - {{ stdlib("c") }}
+        - {{ compiler("c") }}
+        - {{ compiler("cxx") }}
+        - cmake 3.29.*                           # 3.30 failing for intel mac
+        - ninja
+        - llvm-openmp                            # [osx]
+        - libgomp                                # [linux]
+        - cpptrace
+      host:
+        - hdf5
+        - libblas
+        - liblapack
+        - fftw
+        - fmt
+        - cpp-argparse
+
+    test:
+      commands:
+        # Verify library
+        - test -f $PREFIX/lib/libEinsums$SHLIB_EXT                             # [unix]
+        - test ! -f $PREFIX/lib/libEinsums.a                                   # [unix]
+        # Verify accessories
+        - test -f $PREFIX/include/Einsums/Tensor.hpp                           # [unix]
+        - test -f $PREFIX/include/Einsums/h5cpp/H5Pall.hpp                     # [unix]
+        - test -f $PREFIX/share/cmake/Einsums/EinsumsConfig.cmake              # [unix]
+        - test -f $PREFIX/share/cmake/Einsums/EinsumsTargets.cmake             # [unix]
+        # Inspect linkage
+        - ldd -v $PREFIX/lib/libEinsums$SHLIB_EXT                              # [linux]
+        - otool -L $PREFIX/lib/libEinsums$SHLIB_EXT                            # [osx]
 
 about:
   home: https://github.com/Einsums/Einsums
@@ -103,15 +71,3 @@ extra:
   recipe-maintainers:
     - loriab
     - jturney
-
-## NOTES
-# * BLAS/LAPACK
-#   * Einsums requires: blas and lapack.
-#     But since both MKL and OpenBLAS distribute all both, only blas is listed.
-#   * Einsums _does_ compile different code for MKL vs. other distributions, hence the
-#     `blas_impl` in cbc.yaml. MKL and OpenBLAS are known to work. netlib would
-#     probably work. Accelerate definitely _doesn't_ work. And blis hasn't been tested.
-#     Building only MKL and OpenBLAS variants seemed to cover most uses most safely.
-# * hptt
-#   * hptt cmake is setting some native tuning flags that might need to be defeted.
-#     https://github.com/Einsums/hptt/blob/master/CMakeLists.txt#L43-L46
