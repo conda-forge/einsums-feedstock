@@ -8,11 +8,8 @@ jobs:
     vmImage: macOS-13
   strategy:
     matrix:
-      osx_64_blas_implmkl:
-        CONFIG: osx_64_blas_implmkl
-        UPLOAD_PACKAGES: 'True'
-      osx_64_blas_implopenblas:
-        CONFIG: osx_64_blas_implopenblas
+      osx_64_:
+        CONFIG: osx_64_
         UPLOAD_PACKAGES: 'True'
       osx_arm64_:
         CONFIG: osx_arm64_
