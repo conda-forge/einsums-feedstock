@@ -14,12 +14,12 @@ source:
 build:
   number: {{ build_number }}
   binary_relocation: true
+  skip: true # [win]
 
 outputs:
   - name: einsums
     script: build-cxx.sh
     build:
-      skip: true  # [win]
       run_exports:
         - {{ pin_subpackage('einsums', max_pin='x.x') }}
 
@@ -57,6 +57,41 @@ outputs:
         # Inspect linkage
         - ldd -v $PREFIX/lib/libEinsums$SHLIB_EXT                              # [linux]
         - otool -L $PREFIX/lib/libEinsums$SHLIB_EXT                            # [osx]
+
+  - name: py-einsums
+    script: build-py.sh
+    requirements:
+      build:
+        - {{ stdlib("c") }}
+        - {{ compiler("c") }}
+        - {{ compiler("cxx") }}
+        - cmake 3.29.*                           # 3.30 failing for intel mac
+        - ninja
+        - llvm-openmp                            # [osx]
+        - libgomp                                # [linux]
+        - catch2                                 # For 1.0.1 this can be removed.
+        - python                                 # [build_platform != target_platform]
+        - cross-python_{{ target_platform }}     # [build_platform != target_platform]
+        - numpy                                  # [build_platform != target_platform]
+        - pybind11                               # [build_platform != target_platform]
+      host:
+        - {{ pin_subpackage('einsums', exact=True) }}
+        - python
+        - pybind11
+        - pybind11-abi
+        - numpy
+        - hdf5
+        - libblas
+        - liblapack
+        - fftw
+        - fmt
+        - cpp-argparse
+        - spdlog
+        - zlib
+        - cpptrace                               # [(linux or osx) and x86_64]
+      run:
+        - {{ pin_subpackage('einsums', exact=True) }}
+        - python
 
 about:
   home: https://github.com/Einsums/Einsums
