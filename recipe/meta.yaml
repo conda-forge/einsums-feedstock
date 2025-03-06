@@ -42,7 +42,7 @@ outputs:
         - cpp-argparse
         - spdlog
         - zlib
-        - cpptrace
+        - cpptrace                               # [(linux or osx) and x86_64]
 
     test:
       commands:
