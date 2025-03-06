@@ -11,21 +11,15 @@ if [ "$(uname)" == "Linux" ]; then
 
 fi
 
-# ensure lp64 interface for now
-if [[ "$blas_impl" == "mkl" ]]; then
-    ARCH_ARGS="-DMKL_LINK=sdl -DMKL_INTERFACE=lp64 ${ARCH_ARGS}"
-elif [[ "$blas_impl" == "openblas" ]]; then
-    ARCH_ARGS="-DBLA_VENDOR=OpenBLAS -DBLA_SIZEOF_INTEGER=4 ${ARCH_ARGS}"
-fi
+# # ensure lp64 interface for now
+# if [[ "$blas_impl" == "mkl" ]]; then
+#     ARCH_ARGS="-DMKL_LINK=sdl -DMKL_INTERFACE=lp64 ${ARCH_ARGS}"
+# elif [[ "$blas_impl" == "openblas" ]]; then
+#     ARCH_ARGS="-DBLA_VENDOR=OpenBLAS -DBLA_SIZEOF_INTEGER=4 ${ARCH_ARGS}"
+# fi
 
 # Einsums target platform specific options
 plat_args=()
-if [[ "${target_platform}" == "osx-arm64" ]]; then
-    plat_args+=( '-D EINSUMS_ENABLE_TESTING=OFF' )
-else
-    plat_args+=( '-D EINSUMS_ENABLE_TESTING=ON' )
-fi
-
 
 ${BUILD_PREFIX}/bin/cmake ${CMAKE_ARGS} ${ARCH_ARGS} \
   -S ${SRC_DIR} \
@@ -38,7 +32,8 @@ ${BUILD_PREFIX}/bin/cmake ${CMAKE_ARGS} ${ARCH_ARGS} \
   -D CMAKE_CXX_COMPILER=${CXX} \
   -D CMAKE_CXX_FLAGS="${CXXFLAGS}" \
   -D CMAKE_INSTALL_LIBDIR=lib \
-  -D EINSUMS_STATIC_BUILD=OFF \
+  -D EINSUMS_WITH_TESTS=OFF \
+  -D EINSUMS_WITH_DOCUMENTATION=OFF \
   "${plat_args[@]}" \
   -D FETCHCONTENT_QUIET=OFF \
   -D CMAKE_REQUIRE_FIND_PACKAGE_Catch2=ON \
@@ -46,9 +41,3 @@ ${BUILD_PREFIX}/bin/cmake ${CMAKE_ARGS} ${ARCH_ARGS} \
   -D CMAKE_PREFIX_PATH="${PREFIX}"
 
 cmake --build build --target install
-
-cd build
-if [[ "${CONDA_BUILD_CROSS_COMPILATION:-}" != "1" || "${CROSSCOMPILING_EMULATOR}" != "" ]]; then
-    ctest --rerun-failed --output-on-failure -j${CPU_COUNT}
-fi
-

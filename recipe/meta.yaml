@@ -33,6 +33,7 @@ outputs:
         - llvm-openmp                            # [osx]
         - libgomp                                # [linux]
         - cpptrace
+        - catch2                                 # For 1.0.1 this can be removed.
       host:
         - hdf5
         - libblas
@@ -40,6 +41,7 @@ outputs:
         - fftw
         - fmt
         - cpp-argparse
+        - spdlog
 
     test:
       commands:
