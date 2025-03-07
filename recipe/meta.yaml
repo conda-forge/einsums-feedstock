@@ -49,6 +49,8 @@ outputs:
         # Verify library
         - test -f $PREFIX/lib/libEinsums$SHLIB_EXT                             # [unix]
         - test ! -f $PREFIX/lib/libEinsums.a                                   # [unix]
+        - test -f $PREFIX/lib/libEinsumsExperimental$SHLIB_EXT                 # [unix]
+        - test ! -f $PREFIX/lib/libEinsumsExperimental.a                       # [unix]
         # Verify accessories
         - test -f $PREFIX/include/Einsums/Tensor.hpp                           # [unix]
         - test -f $PREFIX/include/Einsums/h5cpp/H5Pall.hpp                     # [unix]
@@ -58,44 +60,10 @@ outputs:
         - ldd -v $PREFIX/lib/libEinsums$SHLIB_EXT                              # [linux]
         - otool -L $PREFIX/lib/libEinsums$SHLIB_EXT                            # [osx]
 
-  - name: py-einsums
-    script: build-py.sh
-    requirements:
-      build:
-        - {{ stdlib("c") }}
-        - {{ compiler("c") }}
-        - {{ compiler("cxx") }}
-        - cmake 3.29.*                           # 3.30 failing for intel mac
-        - ninja
-        - llvm-openmp                            # [osx]
-        - libgomp                                # [linux]
-        - catch2                                 # For 1.0.1 this can be removed.
-        - python                                 # [build_platform != target_platform]
-        - cross-python_{{ target_platform }}     # [build_platform != target_platform]
-        - numpy                                  # [build_platform != target_platform]
-        - pybind11                               # [build_platform != target_platform]
-      host:
-        - {{ pin_subpackage('einsums', exact=True) }}
-        - python
-        - pybind11
-        - pybind11-abi
-        - numpy
-        - hdf5
-        - libblas
-        - liblapack
-        - fftw
-        - fmt
-        - cpp-argparse
-        - spdlog
-        - zlib
-        - cpptrace                               # [(linux or osx) and x86_64]
-      run:
-        - {{ pin_subpackage('einsums', exact=True) }}
-        - python
-
 about:
   home: https://github.com/Einsums/Einsums
   dev_url: https://github.com/Einsums/Einsums
+  doc_url: https://einsums.github.io/Einsums
   license: MIT AND BSD-3-Clause
   license_url: https://opensource.org/license/mit/
   license_file:
