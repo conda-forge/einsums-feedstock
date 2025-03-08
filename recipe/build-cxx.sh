@@ -32,7 +32,7 @@ ${BUILD_PREFIX}/bin/cmake ${CMAKE_ARGS} ${ARCH_ARGS} \
   -D CMAKE_CXX_COMPILER=${CXX} \
   -D CMAKE_CXX_FLAGS="${CXXFLAGS}" \
   -D CMAKE_INSTALL_LIBDIR=lib \
-  -D EINSUMS_WITH_TESTS=OFF \
+  -D EINSUMS_WITH_TESTS=ON \
   -D EINSUMS_WITH_DOCUMENTATION=OFF \
   -D EINSUMS_BUILD_PYTHON=OFF \
   -D EINSUMS_WITH_EXAMPLES=OFF \
@@ -42,4 +42,9 @@ ${BUILD_PREFIX}/bin/cmake ${CMAKE_ARGS} ${ARCH_ARGS} \
   -D CMAKE_REQUIRE_FIND_PACKAGE_fmt=ON \
   -D CMAKE_PREFIX_PATH="${PREFIX}"
 
-cmake --build build --target install
+cmake --build build --target install -j${CPU_COUNT}
+
+cd build
+if [[ "${CONDA_BUILD_CROSS_COMPILATION:-}" != "1" || "${CROSSCOMPILING_EMULATOR}" != "" ]]; then
+    ctest --rerun-failed --output-on-failure -j${CPU_COUNT}
+fi
