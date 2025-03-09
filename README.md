@@ -11,6 +11,8 @@ Summary: J. Turney's C++ library providing compile-time contraction pattern anal
 
 Development: https://github.com/Einsums/Einsums
 
+Documentation: https://einsums.github.io/Einsums
+
 Current build status
 ====================
 
