@@ -1,7 +1,7 @@
 {% set name = "Einsums" %}
-{% set version = "1.0.0" %}
-{% set sha256 = "681362a4e8be800da2ce99728673c5dc669849f8a5dbc248378d19ce5adedcdf" %}
-{% set build_number = 2 %}
+{% set version = "1.0.1" %}
+{% set sha256 = "900ec4d74aba11f03d422f39767c654c223ed9d4f362e64343289ed54f318890" %}
+{% set build_number = 0 %}
 
 package:
   name: {{ name|lower }}-split
@@ -14,7 +14,7 @@ source:
 build:
   number: {{ build_number }}
   binary_relocation: true
-  skip: true                                     # [win]
+  skip: true  # [win]
 
 outputs:
   - name: einsums
@@ -45,7 +45,7 @@ outputs:
         - cpptrace                               # [(linux or osx) and x86_64]
       run:
         - cpp-argparse
-        
+
     test:
       commands:
         # Verify library
