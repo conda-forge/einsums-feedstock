@@ -21,7 +21,7 @@ cxx_compiler_version:
 fftw:
 - '3'
 fmt:
-- '11'
+- '11.1'
 hdf5:
 - 1.14.3
 libblas:
