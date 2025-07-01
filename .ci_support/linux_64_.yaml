@@ -21,7 +21,7 @@ docker_image:
 fftw:
 - '3'
 fmt:
-- '11.1'
+- '11.2'
 hdf5:
 - 1.14.6
 libblas:
