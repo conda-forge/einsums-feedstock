@@ -42,7 +42,7 @@ outputs:
         - cpp-argparse
         - spdlog >=1.15
         - zlib
-        - cpptrace                               # [(linux or osx) and x86_64]
+        - cpptrace
       run:
         - cpp-argparse
 
