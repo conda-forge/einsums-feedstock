@@ -1,7 +1,7 @@
 {% set name = "Einsums" %}
 {% set version = "1.1.1" %}
 {% set sha256 = "d2d98be0748cbec3a8076cf42b005fa1f9d794a403f1e0622477d2244f4e1e2b" %}
-{% set build_number = 0 %}
+{% set build_number = 1 %}
 
 package:
   name: {{ name|lower }}-split
@@ -30,13 +30,13 @@ outputs:
         - {{ compiler("cxx") }}
         - cmake 3.29.*                           # 3.30 failing for intel mac
         - ninja
-        - llvm-openmp                            # [osx]
-        - libgomp                                # [linux]
         - catch2
       host:
         - hdf5
         - libblas
         - liblapack
+        - llvm-openmp                            # [osx]
+        - libgomp                                # [linux]
         - fftw
         - fmt
         - cpp-argparse
