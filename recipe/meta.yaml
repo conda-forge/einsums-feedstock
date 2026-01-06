@@ -1,15 +1,13 @@
-{% set name = "Einsums" %}
 {% set version = "1.1.1" %}
-{% set sha256 = "d2d98be0748cbec3a8076cf42b005fa1f9d794a403f1e0622477d2244f4e1e2b" %}
 {% set build_number = 1 %}
 
 package:
-  name: {{ name|lower }}-split
+  name: einsums-split
   version: {{ version }}
 
 source:
-  url: https://github.com/{{ name }}/{{ name }}/archive/v{{ version }}.tar.gz
-  sha256: {{ sha256 }}
+  url: https://github.com/Einsums/Einsums/archive/v{{ version }}.tar.gz
+  sha256: d2d98be0748cbec3a8076cf42b005fa1f9d794a403f1e0622477d2244f4e1e2b
 
 build:
   number: {{ build_number }}
