@@ -26,6 +26,8 @@ libblas:
 - 3.9.* *netlib
 liblapack:
 - 3.9.* *netlib
+spdlog:
+- '1.16'
 target_platform:
 - linux-64
 zip_keys:
