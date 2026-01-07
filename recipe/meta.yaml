@@ -1,5 +1,5 @@
 {% set version = "1.1.1" %}
-{% set build_number = 1 %}
+{% set build_number = 2 %}
 
 package:
   name: einsums-split
@@ -38,7 +38,7 @@ outputs:
         - fftw
         - fmt
         - cpp-argparse
-        - spdlog >=1.15
+        - spdlog
         - zlib
         - cpptrace
       run:
