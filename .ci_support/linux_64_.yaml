@@ -19,7 +19,7 @@ docker_image:
 fftw:
 - '3'
 fmt:
-- '12.0'
+- '12.1'
 hdf5:
 - 1.14.6
 libblas:
@@ -27,7 +27,7 @@ libblas:
 liblapack:
 - 3.9.* *netlib
 spdlog:
-- '1.16'
+- '1.17'
 target_platform:
 - linux-64
 zip_keys:
