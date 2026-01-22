@@ -9,7 +9,7 @@ source:
   # url: https://github.com/Einsums/Einsums/archive/v{{ version }}.tar.gz
   # sha256: d2d98be0748cbec3a8076cf42b005fa1f9d794a403f1e0622477d2244f4e1e2b
   url: https://github.com/loriab/einsums/archive/pytgt2026.tar.gz
-  sha256: 9c05f8619a48d0879ea275531beed291d77b9a3eab8bbc0c14263f3526e68f80
+  sha256: 1455340e520eabec0175f840996de22a3f79f7b7f598d56bef63c83a8add7da9
 
 build:
   number: {{ build_number }}
@@ -87,13 +87,13 @@ outputs:
         - catch2
         - python                                                               # [build_platform != target_platform]
         - cross-python_{{ target_platform }}                                   # [build_platform != target_platform]
-        - numpy <2.4                                                           # [build_platform != target_platform]
+        - numpy                                                                # [build_platform != target_platform]
         - pybind11                                                             # [build_platform != target_platform]
       host:
         - python
         - pybind11
         - pybind11-abi
-        - numpy <2.4
+        - numpy
         # to rebuild the c++ lib
         - hdf5
         - libblas
@@ -106,8 +106,9 @@ outputs:
         - spdlog
         - zlib
         - cpptrace
-      run:
         - {{ pin_subpackage('einsums', exact=True) }}
+      run:
+        #- {{ pin_subpackage('einsums', exact=True) }}
         - python
         - {{ pin_compatible('numpy') }}
 
