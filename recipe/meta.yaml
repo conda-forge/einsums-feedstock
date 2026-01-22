@@ -75,23 +75,26 @@ outputs:
         - spdlog
         - zlib
         - cpptrace
-      skip: true                                                                # [py != 312]
+      skip: true                                                               # [py != 312]
 
     requirements:
       build:
-        - {{ stdlib("c") }}                                                     # [unix]
-        - {{ compiler("c") }}                                                   # [unix]
-        - {{ compiler("cxx") }}                                                 # [unix]
+        - {{ stdlib("c") }}                                                    # [unix]
+        - {{ compiler("c") }}                                                  # [unix]
+        - {{ compiler("cxx") }}                                                # [unix]
         - cmake
         - ninja
         - catch2
-        - python                                                                 # [build_platform != target_platform]
-        - cross-python_{{ target_platform }}                                     # [build_platform != target_platform]
-        - pybind11                                                               # [build_platform != target_platform]
+        - python                                                               # [build_platform != target_platform]
+        - cross-python_{{ target_platform }}                                   # [build_platform != target_platform]
+        - numpy                                                                # [build_platform != target_platform]
+        - pybind11                                                             # [build_platform != target_platform]
       host:
         - python
         - pybind11
         - pybind11-abi
+        - numpy
+        # to rebuild the c++ lib
         - hdf5
         - libblas
         - liblapack
@@ -106,6 +109,7 @@ outputs:
       run:
         - {{ pin_subpackage('einsums', exact=True) }}
         - python
+        - {{ pin_compatible('numpy') }}
 
     test:
       requires:
@@ -114,15 +118,15 @@ outputs:
         - einsums
       commands:
         # Verify module
-        - test -f $SP_DIR/einsums/core*.so                                       # [unix]
-        - if not exist %SP_DIR%\\einsums\\core*.pyd exit 1                       # [win]
+        - test -f $SP_DIR/einsums/core*.so                                     # [unix]
+        - if not exist %SP_DIR%\\einsums\\core*.pyd exit 1                     # [win]
         # Verify accessories
         # Inspect linkage
-        - ldd -v $SP_DIR/einsums/core*.so                                        # [linux and build_platform == target_platform]
-        - otool -L $SP_DIR/einsums/core*.so                                      # [osx]
+        - ldd -v $SP_DIR/einsums/core*.so                                      # [linux and build_platform == target_platform]
+        - otool -L $SP_DIR/einsums/core*.so                                    # [osx]
         # Actually test
-        - pytest -v -rws --color yes --durations 10 -n auto $SP_DIR/einsums                             # [unix]
-        - pytest -v -rws --color yes --durations 10 -n auto %SP_DIR%\\einsums                           # [win]
+        - pytest -v -rws --color yes --durations 10 -n auto $SP_DIR/einsums    # [unix]
+        - pytest -v -rws --color yes --durations 10 -n auto %SP_DIR%\\einsums  # [win]
 
 about:
   home: https://github.com/Einsums/Einsums
