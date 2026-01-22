@@ -11,13 +11,6 @@ if [ "$(uname)" == "Linux" ]; then
 
 fi
 
-# # ensure lp64 interface for now
-# if [[ "$blas_impl" == "mkl" ]]; then
-#     ARCH_ARGS="-DMKL_LINK=sdl -DMKL_INTERFACE=lp64 ${ARCH_ARGS}"
-# elif [[ "$blas_impl" == "openblas" ]]; then
-#     ARCH_ARGS="-DBLA_VENDOR=OpenBLAS -DBLA_SIZEOF_INTEGER=4 ${ARCH_ARGS}"
-# fi
-
 # Einsums target platform specific options
 plat_args=()
 
@@ -35,6 +28,7 @@ ${BUILD_PREFIX}/bin/cmake ${CMAKE_ARGS} ${ARCH_ARGS} \
   -D EINSUMS_WITH_TESTS=OFF \
   -D EINSUMS_WITH_DOCUMENTATION=OFF \
   -D EINSUMS_BUILD_PYTHON=ON \
+  -D EINSUMS_INSTALL_PYMODDIR=prefix \
   -D EINSUMS_WITH_EXAMPLES=OFF \
   "${plat_args[@]}" \
   -D FETCHCONTENT_QUIET=OFF \
