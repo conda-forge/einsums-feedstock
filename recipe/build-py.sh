@@ -36,10 +36,5 @@ ${BUILD_PREFIX}/bin/cmake ${CMAKE_ARGS} ${ARCH_ARGS} \
   -D CMAKE_REQUIRE_FIND_PACKAGE_fmt=ON \
   -D CMAKE_PREFIX_PATH="${PREFIX}"
 
-cmake --build build --target install
-
-# un-install the c++ part we were obliged to build again
-#rm -rf ${PREFIX}/include/Einsums/
-#rm -rf ${PREFIX}/share/cmake/Einsums/
-## rm ${PREFIX}/share/Einsums/LICENSE.txt
-#rm -rf ${PREFIX}/lib/libEinsums*
+cmake --build build
+cmake --install build --component EinsumsPy

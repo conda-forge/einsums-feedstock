@@ -9,7 +9,7 @@ source:
   # url: https://github.com/Einsums/Einsums/archive/v{{ version }}.tar.gz
   # sha256: d2d98be0748cbec3a8076cf42b005fa1f9d794a403f1e0622477d2244f4e1e2b
   url: https://github.com/loriab/einsums/archive/pytgt2026.tar.gz
-  sha256: 1455340e520eabec0175f840996de22a3f79f7b7f598d56bef63c83a8add7da9
+  sha256: 96e0ef3240a79255e04fa42ec4d146c607364b72d868db12df7ae939989b422a
 
 build:
   number: {{ build_number }}
