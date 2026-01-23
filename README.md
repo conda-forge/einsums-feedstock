@@ -65,6 +65,7 @@ Current release info
 | Name | Downloads | Version | Platforms |
 | --- | --- | --- | --- |
 | [![Conda Recipe](https://img.shields.io/badge/recipe-einsums-green.svg)](https://anaconda.org/conda-forge/einsums) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/einsums.svg)](https://anaconda.org/conda-forge/einsums) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/einsums.svg)](https://anaconda.org/conda-forge/einsums) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/einsums.svg)](https://anaconda.org/conda-forge/einsums) |
+| [![Conda Recipe](https://img.shields.io/badge/recipe-pyeinsums-green.svg)](https://anaconda.org/conda-forge/pyeinsums) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/pyeinsums.svg)](https://anaconda.org/conda-forge/pyeinsums) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/pyeinsums.svg)](https://anaconda.org/conda-forge/pyeinsums) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/pyeinsums.svg)](https://anaconda.org/conda-forge/pyeinsums) |
 
 Installing einsums
 ==================
@@ -76,16 +77,16 @@ conda config --add channels conda-forge
 conda config --set channel_priority strict
 ```
 
-Once the `conda-forge` channel has been enabled, `einsums` can be installed with `conda`:
+Once the `conda-forge` channel has been enabled, `einsums, pyeinsums` can be installed with `conda`:
 
 ```
-conda install einsums
+conda install einsums pyeinsums
 ```
 
 or with `mamba`:
 
 ```
-mamba install einsums
+mamba install einsums pyeinsums
 ```
 
 It is possible to list all of the versions of `einsums` available on your platform with `conda`:
