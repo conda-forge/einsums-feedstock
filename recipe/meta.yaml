@@ -66,13 +66,10 @@ outputs:
     script: build-py.sh
     build:
       ignore_run_exports_from:
-        - hdf5
         - libblas
         - liblapack
         - fftw
-        - fmt
         - cpp-argparse
-        - spdlog
         - zlib
         - cpptrace
       skip: true                                                               # [py != 312]
@@ -100,12 +97,12 @@ outputs:
         - hdf5
         - libblas
         - liblapack
-        - fftw  # [linux]
-        - fmt   # [linux]
-        - cpp-argparse  # [linux]
-        - spdlog  # [linux]
+        - fftw
+        - fmt
+        - cpp-argparse
+        - spdlog
         - zlib
-        - cpptrace  # [linux]
+        - cpptrace
         - {{ pin_subpackage('einsums', exact=True) }}
       run:
         - {{ pin_subpackage('einsums', exact=True) }}
