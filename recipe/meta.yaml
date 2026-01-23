@@ -9,7 +9,7 @@ source:
   # url: https://github.com/Einsums/Einsums/archive/v{{ version }}.tar.gz
   # sha256: d2d98be0748cbec3a8076cf42b005fa1f9d794a403f1e0622477d2244f4e1e2b
   url: https://github.com/loriab/einsums/archive/pytgt2026.tar.gz
-  sha256: 96e0ef3240a79255e04fa42ec4d146c607364b72d868db12df7ae939989b422a
+  sha256: d31decb907fcd06eee71800a1352618ae39898887f8a1fe41a48ddcfcd13e49f
 
 build:
   number: {{ build_number }}
@@ -104,7 +104,7 @@ outputs:
         - fmt   # [linux]
         - cpp-argparse  # [linux]
         - spdlog  # [linux]
-        - zlib  # [linux]
+        - zlib
         - cpptrace  # [linux]
         - {{ pin_subpackage('einsums', exact=True) }}
       run:
