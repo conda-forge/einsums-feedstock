@@ -94,21 +94,21 @@ outputs:
         - pybind11
         - pybind11-abi
         - numpy
+        - llvm-openmp                            # [osx]
+        - libgomp                                # [linux]
         # to rebuild the c++ lib
         - hdf5
         - libblas
         - liblapack
-        - llvm-openmp                            # [osx]
-        - libgomp                                # [linux]
-        - fftw
-        - fmt
-        - cpp-argparse
-        - spdlog
-        - zlib
-        - cpptrace
+        - fftw  # [linux]
+        - fmt   # [linux]
+        - cpp-argparse  # [linux]
+        - spdlog  # [linux]
+        - zlib  # [linux]
+        - cpptrace  # [linux]
         - {{ pin_subpackage('einsums', exact=True) }}
       run:
-        #- {{ pin_subpackage('einsums', exact=True) }}
+        - {{ pin_subpackage('einsums', exact=True) }}
         - python
         - {{ pin_compatible('numpy') }}
 
