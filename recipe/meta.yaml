@@ -1,5 +1,5 @@
-{% set version = "1.1.1" %}
-{% set build_number = 3 %}
+{% set version = "1.1.2" %}
+{% set build_number = 0 %}
 
 package:
   name: einsums-split
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://github.com/Einsums/Einsums/archive/v{{ version }}.tar.gz
-  sha256: d2d98be0748cbec3a8076cf42b005fa1f9d794a403f1e0622477d2244f4e1e2b
+  sha256: 73f43a6b10780e5cca7149c55c2fd5b03ce4269b56fdd2cc83e949a025bde8f7
 
 build:
   number: {{ build_number }}
