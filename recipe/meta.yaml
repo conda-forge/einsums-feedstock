@@ -1,15 +1,13 @@
-{% set version = "1.1.1" %}
-{% set build_number = 4 %}
+{% set version = "1.1.2" %}
+{% set build_number = 0 %}
 
 package:
   name: einsums-split
   version: {{ version }}
 
 source:
-  # url: https://github.com/Einsums/Einsums/archive/v{{ version }}.tar.gz
-  # sha256: d2d98be0748cbec3a8076cf42b005fa1f9d794a403f1e0622477d2244f4e1e2b
-  url: https://github.com/loriab/einsums/archive/pytgt2026.tar.gz
-  sha256: d31decb907fcd06eee71800a1352618ae39898887f8a1fe41a48ddcfcd13e49f
+  url: https://github.com/Einsums/Einsums/archive/v{{ version }}.tar.gz
+  sha256: 73f43a6b10780e5cca7149c55c2fd5b03ce4269b56fdd2cc83e949a025bde8f7
 
 build:
   number: {{ build_number }}
@@ -28,7 +26,7 @@ outputs:
         - {{ stdlib("c") }}
         - {{ compiler("c") }}
         - {{ compiler("cxx") }}
-        - cmake 3.29.*                           # 3.30 failing for intel mac
+        - cmake
         - ninja
         - catch2
       host:
