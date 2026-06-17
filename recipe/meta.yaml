@@ -64,7 +64,6 @@ outputs:
         - libblas
         - liblapack
         - fftw
-        - cpp-argparse
         - zlib
         - cpptrace
       skip: true                                                               # [py != 312]
@@ -94,7 +93,6 @@ outputs:
         - liblapack
         - fftw
         - fmt
-        - cpp-argparse
         - spdlog
         - zlib
         - cpptrace
