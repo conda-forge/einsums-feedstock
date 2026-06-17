@@ -52,8 +52,6 @@ outputs:
         # Verify library
         - test -f $PREFIX/lib/libEinsums$SHLIB_EXT                             # [unix]
         - test ! -f $PREFIX/lib/libEinsums.a                                   # [unix]
-        - test -f $PREFIX/lib/libEinsumsExperimental$SHLIB_EXT                 # [unix]
-        - test ! -f $PREFIX/lib/libEinsumsExperimental.a                       # [unix]
         # Verify accessories
         - test -f $PREFIX/include/Einsums/Tensor.hpp                           # [unix]
         - test -f $PREFIX/include/Einsums/h5cpp/H5Pall.hpp                     # [unix]
