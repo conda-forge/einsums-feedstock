@@ -7,9 +7,10 @@ package:
   version: {{ version }}
 
 source:
-  url: https://github.com/Einsums/Einsums/archive/{{ commit }}.tar.gz
+  # url: https://github.com/Einsums/Einsums/archive/{{ commit }}.tar.gz
+  url: https://github.com/loriab/einsums/tree/loriab-patch-1.tar.gz
   # url: https://github.com/Einsums/Einsums/archive/v{{ version }}.tar.gz
-  sha256: aabcd9c094e1ee06121d659b15fc6fed42bbdaafa72bdc8ad085e0a75c3e7c0a
+  sha256: 0580bd375e3ff86bed10af4ad399416774ceb480163e4c27d206ecad744e50f2
 
 build:
   number: {{ build_number }}

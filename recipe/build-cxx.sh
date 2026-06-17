@@ -12,8 +12,11 @@ if [ "$(uname)" == "Linux" ]; then
 fi
 
 if [[ "$target_platform" == "osx-arm64" ]]; then
-    echo "Skipping tests on macOS ARM"
-    ARCH_ARGS="${ARCH_ARGS} -D EINSUMS_WITH_TESTS=OFF"
+    # cross-compile
+    # echo "Skipping tests on macOS ARM"
+    # ARCH_ARGS="${ARCH_ARGS} -D EINSUMS_WITH_TESTS=OFF"
+    # not cross-compile
+    ARCH_ARGS="${ARCH_ARGS} -D EINSUMS_WITH_TESTS=ON -D CMAKE_REQUIRE_FIND_PACKAGE_Catch2=ON"
 else
     ARCH_ARGS="${ARCH_ARGS} -D EINSUMS_WITH_TESTS=ON -D CMAKE_REQUIRE_FIND_PACKAGE_Catch2=ON"
 fi
