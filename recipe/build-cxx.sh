@@ -50,7 +50,7 @@ cd build
 # if [[ "$target_platform" != "osx-arm64" && ( "${CONDA_BUILD_CROSS_COMPILATION:-}" != "1" || -n "${CROSSCOMPILING_EMULATOR}" ) ]]; then
 # not cross-compile
 if [[ "${CONDA_BUILD_CROSS_COMPILATION:-}" != "1" || -n "${CROSSCOMPILING_EMULATOR}" ]]; then
-  if [[ "$target_platform" == "osx-64" ]]; then
+  if [[ "$target_platform" == "osx-64" || "$target_platform" == "osx-arm64" ]]; then
     ctest -E cl --rerun-failed --output-on-failure -j${CPU_COUNT}
   else
     ctest --rerun-failed --output-on-failure -j${CPU_COUNT}
