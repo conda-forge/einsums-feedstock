@@ -2,6 +2,9 @@
 {% set commit = "6d45814" %}
 {% set build_number = 0 %}
 
+# main: set version (tagged)
+# dev:  set version (invented) and commit (for source)
+
 package:
   name: einsums-split
   version: {{ version }}
