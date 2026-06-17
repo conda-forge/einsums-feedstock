@@ -4,7 +4,7 @@
 
 # main: set version (tagged)
 # dev:  set version (invented) and commit (for source)
-#   2.0a1   =   main 6d45814 + #279 GNU assembly workaround
+#   2.0a1   =   main 6d45814 + #280 GNU assembly workaround
 
 package:
   name: einsums-split
@@ -72,7 +72,7 @@ outputs:
         - fftw
         - zlib
         - cpptrace
-      skip: true                                                               # [py != 312]
+      # skip: true                                                               # [py != 312]
 
     requirements:
       build:
