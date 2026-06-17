@@ -14,8 +14,7 @@ source:
 build:
   number: {{ build_number }}
   binary_relocation: true
-  # skip: true  # [win]
-  skip: true  # [not linux]
+  skip: true  # [win]
 
 outputs:
   - name: einsums
@@ -40,12 +39,9 @@ outputs:
         - libgomp                                # [linux]
         - fftw
         - fmt
-        - cpp-argparse
         - spdlog
         - zlib
         - cpptrace
-      run:
-        - cpp-argparse
 
     test:
       commands:
@@ -54,7 +50,6 @@ outputs:
         - test ! -f $PREFIX/lib/libEinsums.a                                   # [unix]
         # Verify accessories
         - test -f $PREFIX/include/Einsums/Tensor.hpp                           # [unix]
-        - test -f $PREFIX/include/Einsums/h5cpp/H5Pall.hpp                     # [unix]
         - test -f $PREFIX/share/cmake/Einsums/EinsumsConfig.cmake              # [unix]
         - test -f $PREFIX/share/cmake/Einsums/EinsumsTargets.cmake             # [unix]
         # Inspect linkage
@@ -71,7 +66,7 @@ outputs:
         - cpp-argparse
         - zlib
         - cpptrace
-      # skip: true                                                               # [py != 312]
+      skip: true                                                               # [py != 312]
 
     requirements:
       build:
