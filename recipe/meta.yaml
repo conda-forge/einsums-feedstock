@@ -12,9 +12,11 @@ package:
 
 source:
   # url: https://github.com/Einsums/Einsums/archive/{{ commit }}.tar.gz
-  url: https://github.com/loriab/einsums/archive/loriab-patch-1.tar.gz
+  # url: https://github.com/loriab/einsums/archive/loriab-patch-1.tar.gz
+  # sha256: e82800e38b9ecec13de61fed5972b75913f7695cd4685761f12f5c5e202f265b
+  url: https://github.com/Einsums/Einsums/archive/cgbriggs99-patch-1.tar.gz
   # url: https://github.com/Einsums/Einsums/archive/v{{ version }}.tar.gz
-  sha256: e82800e38b9ecec13de61fed5972b75913f7695cd4685761f12f5c5e202f265b
+  sha256: c3c600d0005187f7095afef8dcfba65f49fc75eb669292c17b567581a5025591
 
 build:
   number: {{ build_number }}
@@ -70,7 +72,7 @@ outputs:
         - fftw
         - zlib
         - cpptrace
-      # skip: true                                                               # [py != 312]
+      skip: true                                                               # [py != 312]
 
     requirements:
       build:
