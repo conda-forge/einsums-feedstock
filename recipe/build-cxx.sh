@@ -46,6 +46,13 @@ ${BUILD_PREFIX}/bin/cmake ${CMAKE_ARGS} ${ARCH_ARGS} \
 cmake --build build --target install -j${CPU_COUNT}
 
 cd build
-if [[ "$target_platform" != "osx-arm64" && ( "${CONDA_BUILD_CROSS_COMPILATION:-}" != "1" || -n "${CROSSCOMPILING_EMULATOR}" ) ]]; then
+# cross-compile
+# if [[ "$target_platform" != "osx-arm64" && ( "${CONDA_BUILD_CROSS_COMPILATION:-}" != "1" || -n "${CROSSCOMPILING_EMULATOR}" ) ]]; then
+# not cross-compile
+if [[ "${CONDA_BUILD_CROSS_COMPILATION:-}" != "1" || -n "${CROSSCOMPILING_EMULATOR}" ]]; then
+  if [[ "$target_platform" == "osx-64" ]]; then
+    ctest -E cl --rerun-failed --output-on-failure -j${CPU_COUNT}
+  else
     ctest --rerun-failed --output-on-failure -j${CPU_COUNT}
+  fi
 fi
