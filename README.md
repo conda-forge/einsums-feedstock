@@ -17,7 +17,14 @@ Current build status
 ====================
 
 
-<table>
+<table><tr>
+    <td>GitHub Actions</td>
+    <td>
+      <a href="https://github.com/conda-forge/einsums-feedstock/actions/workflows/conda-build.yml">
+        <img src="https://github.com/conda-forge/einsums-feedstock/actions/workflows/conda-build.yml/badge.svg?event=push&branch=main">
+      </a>
+    </td>
+  </tr>
     
   <tr>
     <td>Azure</td>
@@ -31,13 +38,6 @@ Current build status
         <table>
           <thead><tr><th>Variant</th><th>Status</th></tr></thead>
           <tbody><tr>
-              <td>linux_64</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=20636&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/einsums-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_64_" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
               <td>osx_64</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=20636&branchName=main">
@@ -70,14 +70,14 @@ Current release info
 Installing einsums
 ==================
 
-Installing `einsums` from the `conda-forge` channel can be achieved by adding `conda-forge` to your channels with:
+Installing `einsums` from the `conda-forge/label/einsums_dev` channel can be achieved by adding `conda-forge/label/einsums_dev` to your channels with:
 
 ```
-conda config --add channels conda-forge
+conda config --add channels conda-forge/label/einsums_dev
 conda config --set channel_priority strict
 ```
 
-Once the `conda-forge` channel has been enabled, `einsums, pyeinsums` can be installed with `conda`:
+Once the `conda-forge/label/einsums_dev` channel has been enabled, `einsums, pyeinsums` can be installed with `conda`:
 
 ```
 conda install einsums pyeinsums
@@ -92,26 +92,26 @@ mamba install einsums pyeinsums
 It is possible to list all of the versions of `einsums` available on your platform with `conda`:
 
 ```
-conda search einsums --channel conda-forge
+conda search einsums --channel conda-forge/label/einsums_dev
 ```
 
 or with `mamba`:
 
 ```
-mamba search einsums --channel conda-forge
+mamba search einsums --channel conda-forge/label/einsums_dev
 ```
 
 Alternatively, `mamba repoquery` may provide more information:
 
 ```
 # Search all versions available on your platform:
-mamba repoquery search einsums --channel conda-forge
+mamba repoquery search einsums --channel conda-forge/label/einsums_dev
 
 # List packages depending on `einsums`:
-mamba repoquery whoneeds einsums --channel conda-forge
+mamba repoquery whoneeds einsums --channel conda-forge/label/einsums_dev
 
 # List dependencies of `einsums`:
-mamba repoquery depends einsums --channel conda-forge
+mamba repoquery depends einsums --channel conda-forge/label/einsums_dev
 ```
 
 
@@ -181,6 +181,7 @@ In order to produce a uniquely identifiable distribution:
 Feedstock Maintainers
 =====================
 
+* [@cgbriggs99](https://github.com/cgbriggs99/)
 * [@jturney](https://github.com/jturney/)
 * [@loriab](https://github.com/loriab/)
 

@@ -1,13 +1,22 @@
-{% set version = "1.1.3" %}
+{% set version = "2.0a1" %}
+{% set commit = "6d45814" %}
 {% set build_number = 0 %}
+
+# main: set version (tagged)
+# dev:  set version (invented) and commit (for source)
+#   2.0a1   =   main 6d45814 + #280 GNU assembly workaround
 
 package:
   name: einsums-split
   version: {{ version }}
 
 source:
-  url: https://github.com/Einsums/Einsums/archive/v{{ version }}.tar.gz
-  sha256: 87ae981bc76ac5da6ca0302b000ce13c53285a6ccaf50777b61bcda4ce3b7c4c
+  # url: https://github.com/Einsums/Einsums/archive/{{ commit }}.tar.gz
+  # url: https://github.com/loriab/einsums/archive/loriab-patch-1.tar.gz
+  # sha256: e82800e38b9ecec13de61fed5972b75913f7695cd4685761f12f5c5e202f265b
+  url: https://github.com/Einsums/Einsums/archive/cgbriggs99-patch-1.tar.gz
+  # url: https://github.com/Einsums/Einsums/archive/v{{ version }}.tar.gz
+  sha256: 0e044281e55f13c0292819a7defab9880f0b1e01e9e1c0ff51b6d9a5b3263c4f
 
 build:
   number: {{ build_number }}
@@ -37,23 +46,17 @@ outputs:
         - libgomp                                # [linux]
         - fftw
         - fmt
-        - cpp-argparse
         - spdlog
         - zlib
         - cpptrace
-      run:
-        - cpp-argparse
 
     test:
       commands:
         # Verify library
         - test -f $PREFIX/lib/libEinsums$SHLIB_EXT                             # [unix]
         - test ! -f $PREFIX/lib/libEinsums.a                                   # [unix]
-        - test -f $PREFIX/lib/libEinsumsExperimental$SHLIB_EXT                 # [unix]
-        - test ! -f $PREFIX/lib/libEinsumsExperimental.a                       # [unix]
         # Verify accessories
         - test -f $PREFIX/include/Einsums/Tensor.hpp                           # [unix]
-        - test -f $PREFIX/include/Einsums/h5cpp/H5Pall.hpp                     # [unix]
         - test -f $PREFIX/share/cmake/Einsums/EinsumsConfig.cmake              # [unix]
         - test -f $PREFIX/share/cmake/Einsums/EinsumsTargets.cmake             # [unix]
         # Inspect linkage
@@ -67,7 +70,6 @@ outputs:
         - libblas
         - liblapack
         - fftw
-        - cpp-argparse
         - zlib
         - cpptrace
       # skip: true                                                               # [py != 312]
@@ -97,7 +99,6 @@ outputs:
         - liblapack
         - fftw
         - fmt
-        - cpp-argparse
         - spdlog
         - zlib
         - cpptrace

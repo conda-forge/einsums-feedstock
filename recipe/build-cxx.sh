@@ -12,8 +12,11 @@ if [ "$(uname)" == "Linux" ]; then
 fi
 
 if [[ "$target_platform" == "osx-arm64" ]]; then
-    echo "Skipping tests on macOS ARM"
-    ARCH_ARGS="${ARCH_ARGS} -D EINSUMS_WITH_TESTS=OFF"
+    # cross-compile
+    # echo "Skipping tests on macOS ARM"
+    # ARCH_ARGS="${ARCH_ARGS} -D EINSUMS_WITH_TESTS=OFF"
+    # not cross-compile
+    ARCH_ARGS="${ARCH_ARGS} -D EINSUMS_WITH_TESTS=ON -D CMAKE_REQUIRE_FIND_PACKAGE_Catch2=ON"
 else
     ARCH_ARGS="${ARCH_ARGS} -D EINSUMS_WITH_TESTS=ON -D CMAKE_REQUIRE_FIND_PACKAGE_Catch2=ON"
 fi
@@ -43,6 +46,13 @@ ${BUILD_PREFIX}/bin/cmake ${CMAKE_ARGS} ${ARCH_ARGS} \
 cmake --build build --target install -j${CPU_COUNT}
 
 cd build
-if [[ "$target_platform" != "osx-arm64" && ( "${CONDA_BUILD_CROSS_COMPILATION:-}" != "1" || -n "${CROSSCOMPILING_EMULATOR}" ) ]]; then
+# cross-compile
+# if [[ "$target_platform" != "osx-arm64" && ( "${CONDA_BUILD_CROSS_COMPILATION:-}" != "1" || -n "${CROSSCOMPILING_EMULATOR}" ) ]]; then
+# not cross-compile
+if [[ "${CONDA_BUILD_CROSS_COMPILATION:-}" != "1" || -n "${CROSSCOMPILING_EMULATOR}" ]]; then
+  if [[ "$target_platform" == "osx-64" || "$target_platform" == "osx-arm64" ]]; then
+    ctest -E cl --rerun-failed --output-on-failure -j${CPU_COUNT}
+  else
     ctest --rerun-failed --output-on-failure -j${CPU_COUNT}
+  fi
 fi
