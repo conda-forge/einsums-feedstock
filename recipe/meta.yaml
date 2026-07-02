@@ -1,14 +1,14 @@
 {% set name = "Einsums" %}
-{% set version = "0.6" %}
-{% set sha256 = "21f9a3b50a01e38b2ccf9e0830daac03a4dea0f5ea9005d64e01bc22ec311e74" %}
-{% set build_number = 0 %}
+{% set version = "1.1.4" %}
+{% set sha256 = "cc2c46abcb5a0a9dc48b7332c044de1cc4f07b64fdbfce1416a2f3a1da96d6a8" %}
+{% set build_number = 1 %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://github.com/{{ name }}/{{ name }}/archive/v{{ version }}.tar.gz
+  url: https://github.com/{{ name }}/{{ name }}/archive/v{{ version }}_{{ build_number }}.tar.gz
   sha256: {{ sha256 }}
 
 build:
@@ -33,11 +33,11 @@ requirements:
   host:
     - catch2
     - fmt 11
-    - hdf5
+    - hdf5<2
     - range-v3 0.12
     - zlib
     - llvm-openmp                                                          # [blas_impl == "mkl" and linux]
-    - mkl-devel {{ mkl }}                                                  # [blas_impl == "mkl"]
+    - mkl-devel<2026 {{ mkl }}                                                  # [blas_impl == "mkl"]
     - blas-devel * *_{{ blas_impl }}                                       # [blas_impl == "openblas"]
     - fftw                                                                 # [blas_impl == "openblas"]
     - openblas * openmp_*                                                  # [blas_impl == "openblas"]
