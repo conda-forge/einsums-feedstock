@@ -1,4 +1,4 @@
-{% set version = "1.1.4" %}
+{% set version = "1.1.5" %}
 {% set build_number = 0 %}
 
 package:
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://github.com/Einsums/Einsums/archive/v{{ version }}.tar.gz
-  sha256: 7e0cef30105579728cb6347731249949b948a9872574b1abf1dd18396f343a54
+  sha256: c1fbff69d9a605cae554a86e76e2b6a8bf67441f95e3b0289fbbdb65577d3cd9
 
 build:
   number: {{ build_number }}
