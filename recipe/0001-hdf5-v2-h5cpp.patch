@@ -1,0 +1,27 @@
+From 44419383b13d12ae540fe38d8d6b7570a789a7d4 Mon Sep 17 00:00:00 2001
+From: "Lori A. Burns" <lori.burns@gmail.com>
+Date: Wed, 12 Aug 2026 03:20:46 -0400
+Subject: [PATCH 1/1] hdf5 patch h5cpp
+
+---
+ cmake/Einsums_SetupH5cpp.cmake | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/cmake/Einsums_SetupH5cpp.cmake b/cmake/Einsums_SetupH5cpp.cmake
+index 38af02a2..623d36a0 100644
+--- a/cmake/Einsums_SetupH5cpp.cmake
++++ b/cmake/Einsums_SetupH5cpp.cmake
+@@ -19,8 +19,8 @@ find_package(TargetHDF5 REQUIRED)
+ include(FetchContent)
+ fetchcontent_declare(
+   h5cpp
+-  URL https://github.com/Einsums/h5cpp/archive/v1.10.4-6+4.tar.gz
+-  URL_HASH SHA256=f9acf8d35ac1584d0c0f36471abc3faaa3e181d2713950b1af21e4f4bc0f9991
++  URL https://github.com/loriab/h5cpp/archive/v1.10.4-6+5.tar.gz
++  URL_HASH SHA256=6e7e8f3227f51f3ad81c68857033290f5c7465b5efe05158a1ffaa2f2438e01f
+ )
+ 
+ fetchcontent_getproperties(h5cpp)
+-- 
+2.55.0
+

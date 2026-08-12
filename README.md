@@ -38,10 +38,17 @@ Current build status
         <table>
           <thead><tr><th>Variant</th><th>Status</th></tr></thead>
           <tbody><tr>
-              <td>osx_64</td>
+              <td>osx_64_hdf51.14.6</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=20636&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/einsums-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_64_" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/einsums-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_64_hdf51.14.6" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>osx_64_hdf52</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=20636&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/einsums-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_64_hdf52" alt="variant">
                 </a>
               </td>
             </tr>
@@ -70,31 +77,73 @@ conda config --add channels conda-forge
 conda config --set channel_priority strict
 ```
 
-Once the `conda-forge` channel has been enabled, `einsums, pyeinsums` can be installed with `conda`:
+How to use
+----------
+
+<details>
+<summary>With conda</summary>
 
 ```
 conda install einsums pyeinsums
 ```
 
-or with `mamba`:
+</details>
+
+<details>
+<summary>With mamba</summary>
 
 ```
 mamba install einsums pyeinsums
 ```
 
-It is possible to list all of the versions of `einsums` available on your platform with `conda`:
+</details>
+
+<details>
+<summary>With pixi</summary>
+
+```
+# for adding to your local project
+pixi add einsums pyeinsums
+# for installing globally
+pixi global install einsums pyeinsums
+```
+
+</details>
+
+Search package versions
+-----------------------
+
+It is possible to list all of the versions of `einsums` available on your platform:
+
+<details>
+<summary>With conda</summary>
 
 ```
 conda search einsums --channel conda-forge
 ```
 
-or with `mamba`:
+</details>
+
+<details>
+<summary>With mamba</summary>
 
 ```
 mamba search einsums --channel conda-forge
 ```
 
-Alternatively, `mamba repoquery` may provide more information:
+</details>
+
+<details>
+<summary>With pixi</summary>
+
+```
+pixi search einsums --channel conda-forge
+```
+
+</details>
+
+<details>
+<summary>With mamba repoquery, which may provide more information</summary>
 
 ```
 # Search all versions available on your platform:
@@ -106,6 +155,8 @@ mamba repoquery whoneeds einsums --channel conda-forge
 # List dependencies of `einsums`:
 mamba repoquery depends einsums --channel conda-forge
 ```
+
+</details>
 
 
 About conda-forge
