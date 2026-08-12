@@ -8,7 +8,7 @@ package:
 source:
   url: https://github.com/Einsums/Einsums/archive/v{{ version }}.tar.gz
   patches:
-    - 0001-hdf5-v2.patch
+    - 0001-hdf5-v2-h5cpp.patch
   sha256: c1fbff69d9a605cae554a86e76e2b6a8bf67441f95e3b0289fbbdb65577d3cd9
 
 build:
