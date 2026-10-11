@@ -7,8 +7,8 @@ package:
 
 source:
   url: https://github.com/Einsums/Einsums/archive/v{{ version }}.tar.gz
-  # patches:
-  #   - 0001-hdf5-v2-h5cpp.patch
+  patches:
+    - 0001-always-install-Py-tests.patch
   sha256: 20a8e56157afa4e8fcfbae2174088dc20fff43e70f8e1f45773a9ff85b0afb35
 
 build:
