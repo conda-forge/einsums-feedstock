@@ -88,6 +88,7 @@ outputs:
         - pybind11                                                             # [build_platform != target_platform]
       host:
         - python
+        - libpython
         - pybind11
         - pybind11-abi
         - numpy
