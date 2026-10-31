@@ -1,40 +1,39 @@
-if [ "$(uname)" == "Darwin" ]; then
-    # avoid "error: use of undeclared identifier 'aligned_alloc'; did you mean 'omp_aligned_alloc'?"
-    ARCH_ARGS="-DEINSUMS_H5CPP_USE_OMP_ALIGNED_ALLOC=ON"
-    # avoid "error: 'bad_variant_access' is unavailable: introduced in macOS 10.13"
+#!/bin/bash
+set -euxo pipefail
+
+# The same libc++ availability override and BLAS libraries as build-cxx.sh, which explains both.
+if [[ "${target_platform}" == osx-* ]]; then
     CXXFLAGS="${CXXFLAGS} -D_LIBCPP_DISABLE_AVAILABILITY"
-
-    # c-f-provided CMAKE_ARGS handles CMAKE_OSX_DEPLOYMENT_TARGET, CMAKE_OSX_SYSROOT
 fi
-if [ "$(uname)" == "Linux" ]; then
-    ARCH_ARGS=""
+# The codegen runs apiary's scripts out of the host prefix; their bytecode would land in apiary's
+# directory and be packaged here.
+export PYTHONDONTWRITEBYTECODE=1
+EINSUMS_LAPACK_LIBRARIES="${PREFIX}/lib/liblapack${SHLIB_EXT};${PREFIX}/lib/libcblas${SHLIB_EXT};${PREFIX}/lib/libblas${SHLIB_EXT}"
 
-fi
-
-# Einsums target platform specific options
-plat_args=()
-
-${BUILD_PREFIX}/bin/cmake ${CMAKE_ARGS} ${ARCH_ARGS} \
+# The bindings link the C++ library, so this configures and builds it again; only the Python
+# component is installed, since the einsums output already holds the rest.
+cmake ${CMAKE_ARGS} \
   -S ${SRC_DIR} \
-  -B build \
+  -B build-py \
   -G Ninja \
-  -D CMAKE_INSTALL_PREFIX=${PREFIX} \
   -D CMAKE_BUILD_TYPE=Release \
-  -D CMAKE_C_COMPILER=${CC} \
-  -D CMAKE_C_FLAGS="${CFLAGS}" \
-  -D CMAKE_CXX_COMPILER=${CXX} \
-  -D CMAKE_CXX_FLAGS="${CXXFLAGS}" \
   -D CMAKE_INSTALL_LIBDIR=lib \
-  -D EINSUMS_WITH_TESTS=OFF \
-  -D EINSUMS_WITH_DOCUMENTATION=OFF \
+  -D Python_EXECUTABLE=${PYTHON} \
   -D EINSUMS_BUILD_PYTHON=ON \
   -D EINSUMS_INSTALL_PYMODDIR=prefix \
+  -D EINSUMS_WITH_TESTS=OFF \
+  -D EINSUMS_WITH_DOCUMENTATION=OFF \
   -D EINSUMS_WITH_EXAMPLES=OFF \
-  "${plat_args[@]}" \
-  -D FETCHCONTENT_QUIET=OFF \
-  -D CMAKE_REQUIRE_FIND_PACKAGE_Catch2=ON \
+  -D LAPACK_LIBRARIES="${EINSUMS_LAPACK_LIBRARIES}" \
+  -D FETCHCONTENT_FULLY_DISCONNECTED=ON \
   -D CMAKE_REQUIRE_FIND_PACKAGE_fmt=ON \
-  -D CMAKE_PREFIX_PATH="${PREFIX}"
+  -D CMAKE_REQUIRE_FIND_PACKAGE_cpptrace=ON \
+  -D CMAKE_REQUIRE_FIND_PACKAGE_spdlog=ON \
+  -D CMAKE_REQUIRE_FIND_PACKAGE_mimalloc=ON \
+  -D CMAKE_REQUIRE_FIND_PACKAGE_Apiary=ON \
+  -D CMAKE_REQUIRE_FIND_PACKAGE_Stripes=ON \
+  -D CMAKE_REQUIRE_FIND_PACKAGE_Waggle=ON
 
-cmake --build build
-cmake --install build --component EinsumsPy
+cmake --build build-py -j${CPU_COUNT}
+# The Python package (einsums/, its stubs and _core) and the einsums launcher.
+cmake --install build-py --component EinsumsPy
