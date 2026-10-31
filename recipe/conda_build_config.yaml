@@ -1,2 +1,5 @@
+# Pre-releases go to their own label, so `conda install einsums` keeps resolving to the last stable
+# release; install one with
+# `conda install -c conda-forge/label/einsums_dev -c conda-forge einsums`.
 channel_targets:
   - conda-forge einsums_dev

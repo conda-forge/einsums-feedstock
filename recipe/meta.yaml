@@ -1,87 +1,210 @@
-{% set version = "2.0a1" %}
-{% set commit = "6d45814" %}
+{% set version = "2.0.0a1" %}
+{% set stripes_version = "1.0.0" %}
+{% set waggle_version = "1.0.1" %}
 {% set build_number = 0 %}
-
-# main: set version (tagged)
-# dev:  set version (invented) and commit (for source)
-#   2.0a1   =   main 6d45814 + #280 GNU assembly workaround
 
 package:
   name: einsums-split
   version: {{ version }}
 
 source:
-  # url: https://github.com/Einsums/Einsums/archive/{{ commit }}.tar.gz
-  # url: https://github.com/loriab/einsums/archive/loriab-patch-1.tar.gz
-  # sha256: e82800e38b9ecec13de61fed5972b75913f7695cd4685761f12f5c5e202f265b
-  url: https://github.com/Einsums/Einsums/archive/cgbriggs99-patch-1.tar.gz
-  # url: https://github.com/Einsums/Einsums/archive/v{{ version }}.tar.gz
-  sha256: 0e044281e55f13c0292819a7defab9880f0b1e01e9e1c0ff51b6d9a5b3263c4f
+  - url: https://github.com/Einsums/Einsums/archive/v{{ version }}.tar.gz
+    sha256: 96715489bf67394480af9dbb4af3309a1cac498a1d1bea9ca5c23a6a1b4cad34
+  # Stripes and Waggle began as Einsums modules and are released on their own; this feedstock
+  # ships them as einsums-stripes and einsums-waggle until they have feedstocks of their own.
+  - url: https://github.com/Einsums/Stripes/archive/v{{ stripes_version }}.tar.gz
+    sha256: 2e9eee12ecaeeeed3e93bca5a547e2af89fedfa93d80df9ef4823ca81538b6e2
+    folder: stripes-src
+  - url: https://github.com/Einsums/Waggle/archive/v{{ waggle_version }}.tar.gz
+    sha256: 119cd104034ca06fd10438af65015c8ee7512c151cf584f65bf9a763acdf258f
+    folder: waggle-src
 
 build:
   number: {{ build_number }}
-  binary_relocation: true
   skip: true  # [win]
 
 outputs:
+  - name: einsums-stripes
+    version: {{ stripes_version }}
+    script: build-stripes.sh
+    build:
+      # The runtime library's soname and the package config both follow the major version.
+      run_exports:
+        - {{ pin_subpackage('einsums-stripes', max_pin='x') }}
+
+    requirements:
+      build:
+        - {{ stdlib("c") }}
+        - {{ compiler("cxx") }}
+        - cmake >=3.25.2
+        - ninja
+
+    test:
+      requires:
+        - {{ compiler("cxx") }}
+        - {{ stdlib("c") }}
+        - cmake >=3.25.2
+        - ninja
+      files:
+        - find-package/
+      commands:
+        - test -f $PREFIX/lib/libstripes$SHLIB_EXT
+        - test -f $PREFIX/include/Stripes/Vec.hpp
+        - test -f $PREFIX/lib/cmake/Stripes/StripesConfig.cmake
+        # stripes_add_dispatch_sources(), which Einsums builds its kernels with
+        - test -f $PREFIX/lib/cmake/Stripes/StripesDispatch.cmake
+        - cmake -S find-package -B find-stripes -G Ninja ${CMAKE_ARGS} -D CMAKE_PREFIX_PATH=$PREFIX -D PACKAGE=Stripes -D VERSION={{ stripes_version }} -D TARGET=Stripes::stripes
+
+  # The C++ profiler and, for now, its Python package (waggle, waggle._core and the waggle command).
+  # waggle._core is built per Python, which makes this output per Python too; the einsums output
+  # therefore pins it by version only, so it stays one build for every Python. The Python package
+  # is to move to an einsums-waggle-python output of its own, which pins this one exactly.
+  - name: einsums-waggle
+    version: {{ waggle_version }}
+    script: build-waggle.sh
+    build:
+      entry_points:
+        - waggle = waggle.cli:main
+      run_exports:
+        - {{ pin_subpackage('einsums-waggle', max_pin='x') }}
+
+    requirements:
+      build:
+        - {{ stdlib("c") }}
+        - {{ compiler("cxx") }}
+        - cmake >=3.25.2
+        - ninja
+        - python                                                               # [build_platform != target_platform]
+        - cross-python_{{ target_platform }}                                   # [build_platform != target_platform]
+        - pybind11                                                             # [build_platform != target_platform]
+      host:
+        - python
+        - pybind11
+        - pybind11-abi
+        - fmt
+        - apiary >=1.3.1,<2  # the codegen tool, which waggle._core's bindings are generated with
+      run:
+        - python
+        # The viewer needs textual; the report and diff commands do not, and the viewer says how
+        # to install it when it is missing.
+
+    test:
+      requires:
+        - {{ compiler("cxx") }}
+        - {{ stdlib("c") }}
+        - cmake >=3.25.2
+        - ninja
+      files:
+        - find-package/
+      imports:
+        - waggle
+        - waggle._core
+      commands:
+        - test -f $PREFIX/lib/libwaggle$SHLIB_EXT
+        - test -f $PREFIX/include/Waggle/Waggle.h
+        - test -f $PREFIX/lib/cmake/Waggle/WaggleConfig.cmake
+        - test -f $SP_DIR/waggle/_core*.so
+        # Nothing of the Python package outside site-packages
+        - test ! -d $PREFIX/lib/waggle
+        - waggle --help
+        - python -c "import waggle; assert waggle.__version__ == '{{ waggle_version }}', waggle.__version__"
+        - otool -L $SP_DIR/waggle/_core*.so                                    # [osx]
+        - ldd -v $SP_DIR/waggle/_core*.so                                      # [linux and build_platform == target_platform]
+        - cmake -S find-package -B find-waggle -G Ninja ${CMAKE_ARGS} -D CMAKE_PREFIX_PATH=$PREFIX -D PACKAGE=Waggle -D VERSION={{ waggle_version }} -D TARGET=Waggle::waggle
+
   - name: einsums
     script: build-cxx.sh
     build:
+      # Einsums breaks ABI between minor versions; the library file carries the ABI generation
+      # (libEinsums-abi<N>), so consumers are pinned to the minor series.
       run_exports:
         - {{ pin_subpackage('einsums', max_pin='x.x') }}
+      # Catch2 is here only for the suite the build runs; libEinsums does not link it.
+      ignore_run_exports_from:
+        - catch2
 
     requirements:
       build:
         - {{ stdlib("c") }}
         - {{ compiler("c") }}
         - {{ compiler("cxx") }}
-        - cmake
+        - cmake >=3.25.2
         - ninja
-        - catch2
+        - pkg-config
       host:
         - hdf5
+        - zlib
         - libblas
+        - libcblas
         - liblapack
         - llvm-openmp                            # [osx]
         - libgomp                                # [linux]
         - fftw
         - fmt
         - spdlog
-        - zlib
         - cpptrace
+        - mimalloc >=3.3,<3.7,!=3.4.0,!=3.4.1
+        - apiary-annotations >=1.3.1,<2  # the APIARY_* macros only; the C++ build generates no code
+        - einsums-stripes {{ stripes_version }}
+        - einsums-waggle {{ waggle_version }}
+        - catch2
+      run:
+        # EinsumsConfig.cmake finds these for every consumer, so they are needed at run time even
+        # where nothing links them (Stripes' headers, Apiary's annotation contract).
+        - apiary-annotations >=1.3.1,<2
+        - einsums-stripes
+        - einsums-waggle
 
     test:
+      requires:
+        - {{ compiler("cxx") }}
+        - {{ stdlib("c") }}
+        - cmake >=3.25.2
+        - ninja
+        - pkg-config
+      files:
+        - consumer/
       commands:
-        # Verify library
-        - test -f $PREFIX/lib/libEinsums$SHLIB_EXT                             # [unix]
-        - test ! -f $PREFIX/lib/libEinsums.a                                   # [unix]
-        # Verify accessories
-        - test -f $PREFIX/include/Einsums/Tensor.hpp                           # [unix]
-        - test -f $PREFIX/share/cmake/Einsums/EinsumsConfig.cmake              # [unix]
-        - test -f $PREFIX/share/cmake/Einsums/EinsumsTargets.cmake             # [unix]
+        # Libraries: shared only, named by ABI generation
+        - test -f $PREFIX/lib/libEinsums-abi1$SHLIB_EXT
+        - test ! -f $PREFIX/lib/libEinsums-abi1.a
+        # Headers and package config
+        - test -f $PREFIX/include/Einsums/Tensor.hpp
+        - test -f $PREFIX/include/Einsums/ComputeGraph.hpp
+        - test -f $PREFIX/share/cmake/Einsums/EinsumsConfig.cmake
+        - test -f $PREFIX/share/cmake/Einsums/EinsumsTargets.cmake
+        # Nothing that belongs to another package
+        - test ! -d $PREFIX/lib/einsums
+        - test ! -e $PREFIX/lib/libspdlog.a
+        - test ! -e $PREFIX/lib/libstripes.a
         # Inspect linkage
-        - ldd -v $PREFIX/lib/libEinsums$SHLIB_EXT                              # [linux]
-        - otool -L $PREFIX/lib/libEinsums$SHLIB_EXT                            # [osx]
+        - ldd -v $PREFIX/lib/libEinsums-abi1$SHLIB_EXT                         # [linux]
+        - otool -L $PREFIX/lib/libEinsums-abi1$SHLIB_EXT                       # [osx]
+        # A downstream project finds, builds and runs against the installed package
+        - cmake -S consumer -B consumer-build -G Ninja ${CMAKE_ARGS} -D CMAKE_PREFIX_PATH=$PREFIX
+        - cmake --build consumer-build
+        - ./consumer-build/consumer --einsums:debug:no-attach-debugger         # [build_platform == target_platform]
 
   - name: pyeinsums
     script: build-py.sh
     build:
       ignore_run_exports_from:
         - libblas
+        - libcblas
         - liblapack
         - fftw
         - zlib
         - cpptrace
-      # skip: true                                                               # [py != 312]
+        - catch2
 
     requirements:
       build:
-        - {{ stdlib("c") }}                                                    # [unix]
-        - {{ compiler("c") }}                                                  # [unix]
-        - {{ compiler("cxx") }}                                                # [unix]
-        - cmake
+        - {{ stdlib("c") }}
+        - {{ compiler("c") }}
+        - {{ compiler("cxx") }}
+        - cmake >=3.25.2
         - ninja
-        - catch2
+        - pkg-config
         - python                                                               # [build_platform != target_platform]
         - cross-python_{{ target_platform }}                                   # [build_platform != target_platform]
         - numpy                                                                # [build_platform != target_platform]
@@ -95,36 +218,57 @@ outputs:
         - libgomp                                                              # [linux]
         # to rebuild the c++ lib
         - hdf5
+        - zlib
         - libblas
+        - libcblas
         - liblapack
         - fftw
         - fmt
         - spdlog
-        - zlib
         - cpptrace
+        - mimalloc >=3.3,<3.7,!=3.4.0,!=3.4.1
+        - apiary >=1.3.1,<2  # the codegen tool, which the bindings are generated with
+        - einsums-stripes {{ stripes_version }}
+        - einsums-waggle {{ waggle_version }}
         - {{ pin_subpackage('einsums', exact=True) }}
+        # Einsums' configure sets Catch2 up even with its tests off; nothing here links it.
+        - catch2
       run:
         - {{ pin_subpackage('einsums', exact=True) }}
         - python
-        - {{ pin_compatible('numpy') }}
+        # einsums.profile and the einsums command import waggle's Python package
+        - einsums-waggle
 
     test:
+      # The Python tests live beside each module's sources and are not installed; run them from the
+      # source tree against the installed package. The root conftest.py holds the shared fixtures
+      # (dtype, the seeding), the tests import helper modules beside them, two promote scripts from
+      # a module's examples, and the IR mutation tests read saved graphs.
+      source_files:
+        - pytest.ini
+        - conftest.py
+        - libs/Einsums/*/tests/unit/*.py
+        - libs/Einsums/*/tests/unit/goldens/*
+        - libs/Einsums/*/examples/*.py
       requires:
+        - pytest
         - pytest-xdist
+        - hypothesis >=6
         - scipy
+        # The profiler viewer's graph summary is rich markup.
+        - rich
       imports:
         - einsums
+        - einsums._core
       commands:
-        # Verify module
-        - test -f $SP_DIR/einsums/core*.so                                     # [unix]
-        - if not exist %SP_DIR%\\einsums\\core*.pyd exit 1                     # [win]
-        # Verify accessories
-        # Inspect linkage
-        - ldd -v $SP_DIR/einsums/core*.so                                      # [linux and build_platform == target_platform]
-        - otool -L $SP_DIR/einsums/core*.so                                    # [osx]
-        # Actually test
-        - pytest -v -rws --color yes --durations 10 -n auto -k "not 1000" $SP_DIR/einsums    # [unix]
-        - pytest -v -rws --color yes --durations 10 -n auto -k "not 1000" %SP_DIR%\\einsums  # [win]
+        - test -f $SP_DIR/einsums/_core*.so
+        - test ! -e $PREFIX/share/apiary
+        - einsums --help
+        - otool -L $SP_DIR/einsums/_core*.so                                   # [osx]
+        - ldd -v $SP_DIR/einsums/_core*.so                                     # [linux and build_platform == target_platform]
+        # test_stage_module_python.py loads probe extension modules that only a build tree compiles,
+        # and it fails rather than skips when they are missing.
+        - pytest -rws --color yes --durations 10 -n auto libs --ignore=libs/Einsums/Python/tests/unit/test_stage_module_python.py  # [build_platform == target_platform]
 
 about:
   home: https://github.com/Einsums/Einsums
