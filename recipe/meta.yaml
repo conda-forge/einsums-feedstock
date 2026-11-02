@@ -198,7 +198,8 @@ outputs:
         - liblapack
         - fftw
         - zlib
-        - cpptrace
+        # cpptrace's run export stays: on osx-64 libcpptrace exports libc++ typeinfo as weak
+        # definitions, and the module binds to them there.
         - catch2
 
     requirements:
@@ -209,7 +210,7 @@ outputs:
         - cmake >=3.25.2
         - ninja
         - pkg-config
-        - python                                                               # [build_platform != target_platform]
+        - python                                                              # [build_platform != target_platform]
         - cross-python_{{ target_platform }}                                   # [build_platform != target_platform]
         - numpy                                                                # [build_platform != target_platform]
         - pybind11                                                             # [build_platform != target_platform]
