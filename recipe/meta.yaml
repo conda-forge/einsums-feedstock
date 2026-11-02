@@ -258,6 +258,8 @@ outputs:
         - libs/Einsums/*/tests/unit/*.py
         - libs/Einsums/*/tests/unit/goldens/*
         - libs/Einsums/*/examples/*.py
+      files:
+        - import_all.py
       requires:
         - pytest
         - pytest-xdist
@@ -274,9 +276,15 @@ outputs:
         - einsums --help
         - otool -L $SP_DIR/einsums/_core*.so                                   # [osx]
         - ldd -v $SP_DIR/einsums/_core*.so                                     # [linux and build_platform == target_platform]
+        - python import_all.py
+        # What the suite checks is the C++ library, which is the same build under every Python, so
+        # the whole of it runs on one. The others run every module's tests but ComputeGraph's, and
+        # the ComputeGraph files that cover the bindings, capture and replay: what differs between
+        # Pythons is the extension module and the pure-Python package.
         # test_stage_module_python.py loads probe extension modules that only a build tree compiles,
         # and it fails rather than skips when they are missing.
-        - pytest -rws --color yes --durations 10 -n auto libs --ignore=libs/Einsums/Python/tests/unit/test_stage_module_python.py  # [build_platform == target_platform]
+        - pytest -rws --color yes --durations 10 -n auto libs --ignore=libs/Einsums/Python/tests/unit/test_stage_module_python.py  # [build_platform == target_platform and py == 314]
+        - pytest -rws --color yes -n auto libs --ignore=libs/Einsums/Python/tests/unit/test_stage_module_python.py --ignore=libs/Einsums/ComputeGraph libs/Einsums/ComputeGraph/tests/unit/test_binding_reachability_python.py libs/Einsums/ComputeGraph/tests/unit/test_capture_python.py libs/Einsums/ComputeGraph/tests/unit/test_executor_python.py libs/Einsums/ComputeGraph/tests/unit/test_graph_python.py  # [build_platform == target_platform and py != 314]
 
 about:
   home: https://github.com/Einsums/Einsums
