@@ -158,6 +158,8 @@ outputs:
         - apiary-annotations >=1.3.1,<2
         - einsums-stripes
         - einsums-waggle
+        # ZLIB::ZLIB is in Einsums' link interface; zlib's run export, libzlib, has no headers.
+        - zlib
 
     test:
       requires:
