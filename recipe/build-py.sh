@@ -11,7 +11,9 @@ export PYTHONDONTWRITEBYTECODE=1
 EINSUMS_LAPACK_LIBRARIES="${PREFIX}/lib/liblapack${SHLIB_EXT};${PREFIX}/lib/libcblas${SHLIB_EXT};${PREFIX}/lib/libblas${SHLIB_EXT}"
 
 # The bindings link the C++ library, so this configures and builds it again; only the Python
-# component is installed, since the einsums output already holds the rest.
+# component is installed, since the einsums output already holds the rest. Every Python variant
+# builds in the same work directory, so each starts from an empty build tree, as build-waggle.sh does.
+rm -rf build-py
 cmake ${CMAKE_ARGS} \
   -S ${SRC_DIR} \
   -B build-py \
