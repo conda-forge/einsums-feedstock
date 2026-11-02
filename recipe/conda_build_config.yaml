@@ -3,3 +3,8 @@
 # `conda install -c conda-forge/label/einsums_dev -c conda-forge einsums`.
 channel_targets:
   - conda-forge einsums_dev
+
+# glibc 2.28 (RHEL 8 and its rebuilds) and the Linux 4.18 headers that come with it; Waggle's sampler
+# uses perf_event_attr fields from Linux 4.8.
+c_stdlib_version:  # [linux]
+  - "2.28"         # [linux]
