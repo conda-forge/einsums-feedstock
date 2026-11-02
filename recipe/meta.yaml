@@ -10,6 +10,10 @@ package:
 source:
   - url: https://github.com/Einsums/Einsums/archive/v{{ version }}.tar.gz
     sha256: 96715489bf67394480af9dbb4af3309a1cac498a1d1bea9ca5c23a6a1b4cad34
+    # Both are fixed in Einsums after 2.0.0a1; drop them with the next version.
+    patches:
+      - 0001-include-omp.h-only-where-it-is-used.patch
+      - 0002-check-only-that-mps-reports-device-memory.patch
   # Stripes and Waggle began as Einsums modules and are released on their own; this feedstock
   # ships them as einsums-stripes and einsums-waggle until they have feedstocks of their own.
   - url: https://github.com/Einsums/Stripes/archive/v{{ stripes_version }}.tar.gz
