@@ -198,8 +198,7 @@ outputs:
         - libcblas
         - liblapack
         - fftw
-        # cpptrace's run export stays: on osx-64 libcpptrace exports libc++ typeinfo as weak
-        # definitions, and the module binds to them there.
+        - cpptrace
         - catch2
 
     requirements:
