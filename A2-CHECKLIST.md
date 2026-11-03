@@ -11,12 +11,12 @@ These need Einsums 2.0.0a2 sources, so this branch does not build 2.0.0a1.
 - [x] zlib dropped from both outputs (20b14aa).
 - [x] cpptrace back in pyeinsums' `ignore_run_exports_from` (6f4b30a).
 - [x] libcblas dropped; both build scripts pass `BLA_VENDOR=Generic` instead of naming the libraries (310fd6e).
+- [x] Patches 0001 to 0004 deleted; each reverse-applies to Einsums origin/main, so all four fixes are in what 2.0.0a2 is tagged from.
 
 ## When Einsums v2.0.0a2 is tagged
 
 - [ ] Set `version` to 2.0.0a2 and replace the Einsums tarball's `sha256`.
 - [ ] Keep `build_number` at 0 for the new version.
-- [ ] Delete patches 0001 to 0004 and the `patches:` list with its comment; all four are fixed in Einsums after 2.0.0a1.
 - [ ] Check that Einsums still pins Stripes v1.0.0 and Waggle v1.0.1 (`cmake/Einsums_SetupStripes.cmake`, `cmake/Einsums_SetupWaggle.cmake`); bump `stripes_version` and `waggle_version` if not.
 - [ ] Rerender with conda-smithy.
 - [ ] Build locally with two Python variants (`--variants "{python: [...]}"`), since per-Python outputs share one work directory.
