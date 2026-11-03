@@ -9,9 +9,8 @@ if [[ "${target_platform}" == osx-* ]]; then
 fi
 
 # conda-forge links against the netlib interface libraries, which users switch to OpenBLAS, MKL or
-# Accelerate at install time. CBLAS is its own library there, and Einsums calls it for the complex
-# dot products, so the libraries are named instead of detected (FindTargetLAPACK honors this).
-EINSUMS_LAPACK_LIBRARIES="${PREFIX}/lib/liblapack${SHLIB_EXT};${PREFIX}/lib/libcblas${SHLIB_EXT};${PREFIX}/lib/libblas${SHLIB_EXT}"
+# Accelerate at install time. The Generic vendor is what finds those; left to choose, the search
+# would take an OpenBLAS it found first and the switch would no longer reach libEinsums.
 
 # The suite runs wherever the build can execute what it compiles: every native build, osx-arm64
 # included, and a cross build that has an emulator.
@@ -34,7 +33,7 @@ cmake ${CMAKE_ARGS} ${TEST_ARGS} \
   -D EINSUMS_BUILD_PYTHON=OFF \
   -D EINSUMS_WITH_DOCUMENTATION=OFF \
   -D EINSUMS_WITH_EXAMPLES=OFF \
-  -D LAPACK_LIBRARIES="${EINSUMS_LAPACK_LIBRARIES}" \
+  -D BLA_VENDOR=Generic \
   -D FETCHCONTENT_FULLY_DISCONNECTED=ON \
   -D CMAKE_REQUIRE_FIND_PACKAGE_fmt=ON \
   -D CMAKE_REQUIRE_FIND_PACKAGE_cpptrace=ON \

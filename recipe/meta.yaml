@@ -140,7 +140,6 @@ outputs:
       host:
         - hdf5
         - libblas
-        - libcblas
         - liblapack
         - llvm-openmp                            # [osx]
         - libgomp                                # [linux]
@@ -195,7 +194,6 @@ outputs:
     build:
       ignore_run_exports_from:
         - libblas
-        - libcblas
         - liblapack
         - fftw
         - cpptrace
@@ -223,7 +221,6 @@ outputs:
         # to rebuild the c++ lib
         - hdf5
         - libblas
-        - libcblas
         - liblapack
         - fftw
         - fmt
