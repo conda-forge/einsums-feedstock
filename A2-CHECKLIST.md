@@ -11,7 +11,12 @@ These need Einsums 2.0.0a2 sources, so this branch does not build 2.0.0a1.
 - [x] zlib dropped from both outputs (20b14aa).
 - [x] cpptrace back in pyeinsums' `ignore_run_exports_from` (6f4b30a).
 - [x] libcblas dropped; both build scripts pass `BLA_VENDOR=Generic` instead of naming the libraries (310fd6e).
-- [x] Patches 0001 to 0004 deleted; each reverse-applies to Einsums origin/main, so all four fixes are in what 2.0.0a2 is tagged from.
+- [x] Patches 0001 to 0004 deleted; each reverse-applies to Einsums main on Jet's fork (jturney/Einsums).
+
+## Before Einsums v2.0.0a2 is tagged
+
+- [ ] Einsums/Einsums main has the commits this recipe relies on, which are only on jturney/Einsums so far: the four patches' fixes, zlib (4453a4cc9), cpptrace, the BLAS config (f130d44f4) and the dot products (77211440a).
+  Tag from Einsums/Einsums, since the source URL downloads from there.
 
 ## When Einsums v2.0.0a2 is tagged
 
