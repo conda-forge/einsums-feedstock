@@ -15,14 +15,14 @@ These need Einsums 2.0.0a2 sources, so this branch does not build 2.0.0a1.
 
 ## Before Einsums v2.0.0a2 is tagged
 
-- [ ] Einsums/Einsums main has the commits this recipe relies on, which are only on jturney/Einsums so far: the four patches' fixes, zlib (4453a4cc9), cpptrace, the BLAS config (f130d44f4) and the dot products (77211440a).
-  Tag from Einsums/Einsums, since the source URL downloads from there.
+- [x] Einsums/Einsums main has the commits this recipe relies on: the four patches' fixes, zlib (4453a4cc9), cpptrace, the BLAS config (f130d44f4) and the dot products (77211440a).
+  v2.0.0a2 is tagged there, on 2614a2725.
 
 ## When Einsums v2.0.0a2 is tagged
 
-- [ ] Set `version` to 2.0.0a2 and replace the Einsums tarball's `sha256`.
-- [ ] Keep `build_number` at 0 for the new version.
-- [ ] Check that Einsums still pins Stripes v1.0.0 and Waggle v1.0.1 (`cmake/Einsums_SetupStripes.cmake`, `cmake/Einsums_SetupWaggle.cmake`); bump `stripes_version` and `waggle_version` if not.
+- [x] Set `version` to 2.0.0a2 and replace the Einsums tarball's `sha256`.
+- [x] Keep `build_number` at 0 for the new version.
+- [x] Check that Einsums still pins Stripes v1.0.0 and Waggle v1.0.1 (`cmake/Einsums_SetupStripes.cmake`, `cmake/Einsums_SetupWaggle.cmake`); bump `stripes_version` and `waggle_version` if not.
 - [ ] Rerender with conda-smithy.
 - [ ] Build locally with two Python variants (`--variants "{python: [...]}"`), since per-Python outputs share one work directory.
 

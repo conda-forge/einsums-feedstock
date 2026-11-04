@@ -1,4 +1,4 @@
-{% set version = "2.0.0a1" %}
+{% set version = "2.0.0a2" %}
 {% set stripes_version = "1.0.0" %}
 {% set waggle_version = "1.0.1" %}
 {% set build_number = 0 %}
@@ -9,7 +9,7 @@ package:
 
 source:
   - url: https://github.com/Einsums/Einsums/archive/v{{ version }}.tar.gz
-    sha256: 96715489bf67394480af9dbb4af3309a1cac498a1d1bea9ca5c23a6a1b4cad34
+    sha256: 35ec175f43d56d8a24172eea1050225ffe32f2986f321afe7612370cceaf5307
   # Stripes and Waggle began as Einsums modules and are released on their own; this feedstock
   # ships them as einsums-stripes and einsums-waggle until they have feedstocks of their own.
   - url: https://github.com/Einsums/Stripes/archive/v{{ stripes_version }}.tar.gz
