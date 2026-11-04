@@ -23,7 +23,7 @@ These need Einsums 2.0.0a2 sources, so this branch does not build 2.0.0a1.
 - [x] Set `version` to 2.0.0a2 and replace the Einsums tarball's `sha256`.
 - [x] Keep `build_number` at 0 for the new version.
 - [x] Check that Einsums still pins Stripes v1.0.0 and Waggle v1.0.1 (`cmake/Einsums_SetupStripes.cmake`, `cmake/Einsums_SetupWaggle.cmake`); bump `stripes_version` and `waggle_version` if not.
-- [ ] Rerender with conda-smithy.
+- [x] Rerender with conda-smithy (c2f5f9f: drops the libcblas and zlib pins the recipe no longer uses).
 - [ ] Build locally with two Python variants (`--variants "{python: [...]}"`), since per-Python outputs share one work directory.
 
 ## Checks on the built packages
